@@ -229,7 +229,6 @@
               <SowingDepth>30</SowingDepth>
               <CultivarName>Buster</CultivarName>
               <SowingDate>1997-11-27</SowingDate>
-              <SkipConfig>solid</SkipConfig>
             </Script>
             <Code><![CDATA[
         using System;
@@ -257,8 +256,8 @@
                public string CultivarName { get; set; }
                [Description("Sowing Date")]
                public DateTime SowingDate { get; set; }
-               [Description("Skip Row Configuration")]
-               public string SkipConfig { get; set;}
+               //[Description("Skip Row Configuration")]
+               //public string SkipConfig { get; set;}
                
                public int DaysAfterSowing { get; set;}
                
@@ -268,10 +267,10 @@
                private void OnDoManagement(object sender, EventArgs e)
                {
 				//double PlantPopulation = 1/((RowWidth/1000)*(RowSpace/1000));
-
+				////////////////////////Need to put in skip///////////////////////////////////////
 				if (Clock.Today.Date == SowingDate)
 				{
-                    Sorghum.Sow(population:PlantPopulation, cultivar:CultivarName, depth:SowingDepth, rowSpacing:RowSpacing, skipRow: SkipConfig);
+                    Sorghum.Sow(population:PlantPopulation, cultivar:CultivarName, depth:SowingDepth, rowSpacing:RowSpacing);
                  DaysAfterSowing = 0;
                  }
                  
@@ -1105,5 +1104,5 @@
       <IncludeInDocumentation>false</IncludeInDocumentation>
     </Graph>
   </Experiment>
-  <ExplorerWidth>0</ExplorerWidth>
+  <ExplorerWidth>250</ExplorerWidth>
 </Simulations>

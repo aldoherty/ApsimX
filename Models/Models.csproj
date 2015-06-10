@@ -386,6 +386,7 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Resources\Supplement.txt" />
+    <None Include="Resources\Sorghum.xml" />
     <Content Include="Resources\WheatPMFPrototype.xml" />
   </ItemGroup>
   <ItemGroup>
