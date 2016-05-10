@@ -957,33 +957,6 @@ Jones and Kiniry (1986) used a constant root senescence fraction in the CERES-So
           <Name>MinimumNConc</Name>
           <Value>0.01</Value>
         </Constant>
-        <LinearInterpolationFunction>
-          <Name>PartitionFraction</Name>
-          <XYPairs>
-            <Name>XYPairs</Name>
-            <X>
-              <double>NaN</double>
-              <double>1</double>
-              <double>2</double>
-              <double>3</double>
-              <double>4</double>
-              <double>5</double>
-              <double>6</double>
-              <double>7</double>
-            </X>
-            <Y>
-              <double>NaN</double>
-              <double>0</double>
-              <double>1</double>
-              <double>1</double>
-              <double>0.33</double>
-              <double>0.33</double>
-              <double>0.087</double>
-              <double>0</double>
-            </Y>
-          </XYPairs>
-          <XProperty>[Phenology].Stage</XProperty>
-        </LinearInterpolationFunction>
         <PhaseLookup>
           <Name>RootFrontVelocity</Name>
           <Memo>
@@ -1065,6 +1038,44 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           </XYPairs>
           <XProperty>[Root].RootLengthDenisty</XProperty>
         </LinearInterpolationFunction>
+        <LinearInterpolationFunction>
+          <Name>PartitionFraction111</Name>
+          <XYPairs>
+            <Name>XYPairs</Name>
+            <X>
+              <double>NaN</double>
+              <double>1</double>
+              <double>2</double>
+              <double>3</double>
+              <double>4</double>
+              <double>5</double>
+              <double>6</double>
+              <double>7</double>
+            </X>
+            <Y>
+              <double>NaN</double>
+              <double>0</double>
+              <double>1</double>
+              <double>1</double>
+              <double>0.33</double>
+              <double>0.33</double>
+              <double>0.087</double>
+              <double>0</double>
+            </Y>
+          </XYPairs>
+          <XProperty>[Phenology].Stage</XProperty>
+        </LinearInterpolationFunction>
+        <Constant>
+          <Name>PartitionFraction</Name>
+          <Memo>
+            <Name>memo</Name>
+            <MemoText><![CDATA[
+<html><body>
+No effect of soil water content on root growth is currently captured in the model.<br/>
+</body></html>]]></MemoText>
+          </Memo>
+          <Value>0</Value>
+        </Constant>
         <InitialDM>0.2</InitialDM>
         <SpecificRootLength>40000</SpecificRootLength>
         <NuptakeSupply>0</NuptakeSupply>
