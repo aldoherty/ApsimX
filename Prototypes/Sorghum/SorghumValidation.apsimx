@@ -1560,7 +1560,7 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
         <PhaseLookup>
           <Name>DMDemandFunction</Name>
           <PhaseLookupValue>
-            <Name>BetweenFIAndFlag</Name>
+            <Name>BetweenFIAndFlower</Name>
             <MultiplyFunction>
               <Name>MultiplyFunction</Name>
               <VariableReference>
@@ -1573,22 +1573,6 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
               </VariableReference>
             </MultiplyFunction>
             <Start>FloralInitiation</Start>
-            <End>FlagLeaf</End>
-          </PhaseLookupValue>
-          <PhaseLookupValue>
-            <Name>BetweenFlagAndFlowering</Name>
-            <MultiplyFunction>
-              <Name>MultiplyFunction</Name>
-              <VariableReference>
-                <Name>DMFixationSupply</Name>
-                <VariableName>[Arbitrator].DMSupply</VariableName>
-              </VariableReference>
-              <VariableReference>
-                <Name>Stem2FlowerFrac</Name>
-                <VariableName>[Stem].StemToFlowerFrac.Value</VariableName>
-              </VariableReference>
-            </MultiplyFunction>
-            <Start>FlagLeaf</Start>
             <End>Flowering</End>
           </PhaseLookupValue>
         </PhaseLookup>
