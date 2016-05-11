@@ -957,33 +957,6 @@ Jones and Kiniry (1986) used a constant root senescence fraction in the CERES-So
           <Name>MinimumNConc</Name>
           <Value>0.01</Value>
         </Constant>
-        <LinearInterpolationFunction>
-          <Name>PartitionFraction</Name>
-          <XYPairs>
-            <Name>XYPairs</Name>
-            <X>
-              <double>NaN</double>
-              <double>1</double>
-              <double>2</double>
-              <double>3</double>
-              <double>4</double>
-              <double>5</double>
-              <double>6</double>
-              <double>7</double>
-            </X>
-            <Y>
-              <double>NaN</double>
-              <double>0</double>
-              <double>1</double>
-              <double>1</double>
-              <double>0.33</double>
-              <double>0.33</double>
-              <double>0.087</double>
-              <double>0</double>
-            </Y>
-          </XYPairs>
-          <XProperty>[Phenology].Stage</XProperty>
-        </LinearInterpolationFunction>
         <PhaseLookup>
           <Name>RootFrontVelocity</Name>
           <Memo>
@@ -1065,6 +1038,33 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           </XYPairs>
           <XProperty>[Root].RootLengthDenisty</XProperty>
         </LinearInterpolationFunction>
+        <LinearInterpolationFunction>
+          <Name>PartitionFraction</Name>
+          <XYPairs>
+            <Name>XYPairs</Name>
+            <X>
+              <double>NaN</double>
+              <double>1</double>
+              <double>2</double>
+              <double>3</double>
+              <double>4</double>
+              <double>5</double>
+              <double>6</double>
+              <double>7</double>
+            </X>
+            <Y>
+              <double>NaN</double>
+              <double>0</double>
+              <double>1</double>
+              <double>1</double>
+              <double>0.33</double>
+              <double>0.33</double>
+              <double>0.087</double>
+              <double>0</double>
+            </Y>
+          </XYPairs>
+          <XProperty>[Phenology].Stage</XProperty>
+        </LinearInterpolationFunction>
         <InitialDM>0.2</InitialDM>
         <SpecificRootLength>40000</SpecificRootLength>
         <NuptakeSupply>0</NuptakeSupply>
@@ -1079,10 +1079,6 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
         </Biomass>
         <RUEModel>
           <Name>Photosynthesis</Name>
-          <Constant>
-            <Name>RUE</Name>
-            <Value>1.25</Value>
-          </Constant>
           <WeightedTemperatureFunction>
             <Name>FT</Name>
             <XYPairs>
@@ -1124,6 +1120,24 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
             <Name>FW</Name>
             <Value>1</Value>
           </Constant>
+          <MultiplyFunction>
+            <Name>RUE</Name>
+            <Constant>
+              <Name>RUEBase</Name>
+              <Value>1.25</Value>
+            </Constant>
+            <AddFunction>
+              <Name>AddFunction</Name>
+              <VariableReference>
+                <Name>VariableReference</Name>
+                <VariableName>[Root].PartitionFraction.Value</VariableName>
+              </VariableReference>
+              <Constant>
+                <Name>One</Name>
+                <Value>1</Value>
+              </Constant>
+            </AddFunction>
+          </MultiplyFunction>
         </RUEModel>
         <MultiplyFunction>
           <Name>ExtinctionCoefficientFunction</Name>
@@ -1546,7 +1560,7 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
         <PhaseLookup>
           <Name>DMDemandFunction</Name>
           <PhaseLookupValue>
-            <Name>BetweenFIAndFlag</Name>
+            <Name>BetweenFIAndFlower</Name>
             <MultiplyFunction>
               <Name>MultiplyFunction</Name>
               <VariableReference>
@@ -1559,22 +1573,6 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
               </VariableReference>
             </MultiplyFunction>
             <Start>FloralInitiation</Start>
-            <End>FlagLeaf</End>
-          </PhaseLookupValue>
-          <PhaseLookupValue>
-            <Name>BetweenFlagAndFlowering</Name>
-            <MultiplyFunction>
-              <Name>MultiplyFunction</Name>
-              <VariableReference>
-                <Name>DMFixationSupply</Name>
-                <VariableName>[Arbitrator].DMSupply</VariableName>
-              </VariableReference>
-              <VariableReference>
-                <Name>Stem2FlowerFrac</Name>
-                <VariableName>[Stem].StemToFlowerFrac.Value</VariableName>
-              </VariableReference>
-            </MultiplyFunction>
-            <Start>FlagLeaf</Start>
             <End>Flowering</End>
           </PhaseLookupValue>
         </PhaseLookup>
