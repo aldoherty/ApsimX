@@ -79,6 +79,18 @@ namespace Models.PMF.Organs
         [Link(IsOptional = true)]
         [Units("g/m2/d")]
         IFunction DMDemandFunction = null;
+        /// <summary>The dm supply fixtion Function</summary>
+        [Link(IsOptional = true)]
+        [Units("g/m2/d")]
+        IFunction DMSupplyFixationFunction = null;
+        /// <summary>The dm supply retranslocation Function</summary>
+        [Link(IsOptional = true)]
+        [Units("g/m2/d")]
+        IFunction DMSupplyReTranslocationFunction = null;
+        /// <summary>The dm supply reallocation Function</summary>
+        [Link(IsOptional = true)]
+        [Units("g/m2/d")]
+        IFunction DMSupplyReAllocationFunction = null;
         /// <summary>The initial wt function</summary>
         [Link(IsOptional = true)]
         [Units("g/m2")]
@@ -199,6 +211,7 @@ namespace Models.PMF.Organs
         {
             get
             {
+                
                 double _DMRetranslocationFactor = 0;
                 if (DMRetranslocationFactor != null) //Default of 0 means retranslocation is always truned off!!!!
                     _DMRetranslocationFactor = DMRetranslocationFactor.Value;
