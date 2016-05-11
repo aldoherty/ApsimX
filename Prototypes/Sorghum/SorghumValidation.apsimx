@@ -1039,7 +1039,7 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <XProperty>[Root].RootLengthDenisty</XProperty>
         </LinearInterpolationFunction>
         <LinearInterpolationFunction>
-          <Name>PartitionFraction111</Name>
+          <Name>PartitionFraction</Name>
           <XYPairs>
             <Name>XYPairs</Name>
             <X>
@@ -1065,17 +1065,6 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           </XYPairs>
           <XProperty>[Phenology].Stage</XProperty>
         </LinearInterpolationFunction>
-        <Constant>
-          <Name>PartitionFraction</Name>
-          <Memo>
-            <Name>memo</Name>
-            <MemoText><![CDATA[
-<html><body>
-No effect of soil water content on root growth is currently captured in the model.<br/>
-</body></html>]]></MemoText>
-          </Memo>
-          <Value>0</Value>
-        </Constant>
         <InitialDM>0.2</InitialDM>
         <SpecificRootLength>40000</SpecificRootLength>
         <NuptakeSupply>0</NuptakeSupply>
@@ -1090,10 +1079,6 @@ No effect of soil water content on root growth is currently captured in the mode
         </Biomass>
         <RUEModel>
           <Name>Photosynthesis</Name>
-          <Constant>
-            <Name>RUE</Name>
-            <Value>1.25</Value>
-          </Constant>
           <WeightedTemperatureFunction>
             <Name>FT</Name>
             <XYPairs>
@@ -1135,6 +1120,24 @@ No effect of soil water content on root growth is currently captured in the mode
             <Name>FW</Name>
             <Value>1</Value>
           </Constant>
+          <MultiplyFunction>
+            <Name>RUE</Name>
+            <Constant>
+              <Name>RUEBase</Name>
+              <Value>1.25</Value>
+            </Constant>
+            <AddFunction>
+              <Name>AddFunction</Name>
+              <VariableReference>
+                <Name>VariableReference</Name>
+                <VariableName>[Root].PartitionFraction.Value</VariableName>
+              </VariableReference>
+              <Constant>
+                <Name>One</Name>
+                <Value>1</Value>
+              </Constant>
+            </AddFunction>
+          </MultiplyFunction>
         </RUEModel>
         <MultiplyFunction>
           <Name>ExtinctionCoefficientFunction</Name>
