@@ -828,10 +828,6 @@ Though tillering is common in some sorghum varieties under certain agronomic con
             <Value>0.001</Value>
           </Constant>
         </MultiplyFunction>
-        <Constant>
-          <Name>DMDemandFunction33</Name>
-          <Value>0</Value>
-        </Constant>
         <RipeStage />
       </ReproductiveOrgan>
       <Root>
@@ -1043,20 +1039,9 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           </VariableReference>
           <VariableReference>
             <Name>BiomassProduction</Name>
-            <VariableName>[Leaf].DMSupplyMin.Value</VariableName>
+            <VariableName>[Leaf].DMSupplyAboveGround.Value</VariableName>
           </VariableReference>
         </MultiplyFunction>
-        <Constant>
-          <Name>DMDemandFunction0</Name>
-          <Memo>
-            <Name>memo</Name>
-            <MemoText><![CDATA[
-<html><body>
-No effect of temperature on root growth is currently captured in the model.<br/>
-</body></html>]]></MemoText>
-          </Memo>
-          <Value>0</Value>
-        </Constant>
         <InitialDM>0.2</InitialDM>
         <SpecificRootLength>40000</SpecificRootLength>
         <NuptakeSupply>0</NuptakeSupply>
@@ -1428,7 +1413,7 @@ No effect of temperature on root growth is currently captured in the model.<br/>
               </VariableReference>
               <VariableReference>
                 <Name>DMFixationSupply</Name>
-                <VariableName>[Leaf].DMSupplyMin.Value</VariableName>
+                <VariableName>[Leaf].DMSupplyAboveGround.Value</VariableName>
               </VariableReference>
             </MultiplyFunction>
             <Start>Emergence</Start>
@@ -1439,7 +1424,7 @@ No effect of temperature on root growth is currently captured in the model.<br/>
           <Name>DMRemaining</Name>
           <VariableReference>
             <Name>DMFixationSupply</Name>
-            <VariableName>[Leaf].DMSupplyMin.Value</VariableName>
+            <VariableName>[Leaf].DMSupplyAboveGround.Value</VariableName>
           </VariableReference>
           <VariableReference>
             <Name>LeafDMDemand</Name>
@@ -1455,7 +1440,7 @@ No effect of temperature on root growth is currently captured in the model.<br/>
           <Value>100</Value>
         </Constant>
         <MinimumFunction>
-          <Name>DMSupplyMin</Name>
+          <Name>DMSupplyAboveGround</Name>
           <VariableReference>
             <Name>BiomTE</Name>
             <VariableName>[Leaf].BiomTE.Value</VariableName>
@@ -1488,7 +1473,7 @@ No effect of temperature on root growth is currently captured in the model.<br/>
           </VariableReference>
         </MultiplyFunction>
         <MultiplyFunction>
-          <Name>DMSupplyFixation</Name>
+          <Name>DMSupplyFixationFunction</Name>
           <AddFunction>
             <Name>AddFunction</Name>
             <Constant>
@@ -1501,8 +1486,8 @@ No effect of temperature on root growth is currently captured in the model.<br/>
             </VariableReference>
           </AddFunction>
           <VariableReference>
-            <Name>DMSupplyMin</Name>
-            <VariableName>[Leaf].DMSupplyMin.Value</VariableName>
+            <Name>DMSupplyAboveGround</Name>
+            <VariableName>[Leaf].DMSupplyAboveGround.Value</VariableName>
           </VariableReference>
         </MultiplyFunction>
         <BiomassYesterday>0</BiomassYesterday>
@@ -2699,6 +2684,7 @@ namespace Models
               <string>[Arbitrator].DMDemand</string>
               <string>[Leaf].LeafPartioningCoefficient.Value</string>
               <string>[Root].PartitionFraction.Value</string>
+              <string>[Root].TotalDMAllocated</string>
             </VariableNames>
             <EventNames>
               <string>[Clock].DoReport</string>
@@ -3910,7 +3896,7 @@ namespace Models
       <Graph>
         <Name>Partitinoing</Name>
         <Series>
-          <Name>Supply</Name>
+          <Name>Leaf</Name>
           <Type>Scatter</Type>
           <XAxis>Bottom</XAxis>
           <YAxis>Left</YAxis>
@@ -3923,15 +3909,15 @@ namespace Models
           <Line>Solid</Line>
           <LineThickness>Normal</LineThickness>
           <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Arbitrator.DMSupply</YFieldName>
+          <XFieldName>stage</XFieldName>
+          <YFieldName>Leaf.LeafPartitioningCoefficient.Value</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
           <CumulativeX>false</CumulativeX>
         </Series>
         <Series>
-          <Name>Demand</Name>
+          <Name>Root</Name>
           <Type>Scatter</Type>
           <XAxis>Bottom</XAxis>
           <YAxis>Left</YAxis>
@@ -3944,8 +3930,8 @@ namespace Models
           <Line>Solid</Line>
           <LineThickness>Normal</LineThickness>
           <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Arbitrator.DMDemand</YFieldName>
+          <XFieldName>stage</XFieldName>
+          <YFieldName>Root.PartitionFraction.Value</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -3962,6 +3948,140 @@ namespace Models
         <Axis>
           <Type>Left</Type>
           <Title />
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries />
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+      </Graph>
+      <Graph>
+        <Name>RootDetail</Name>
+        <Series>
+          <Name>DMDemand</Name>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-3376729</ColourArgb>
+          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>Report</TableName>
+          <XFieldName>stage</XFieldName>
+          <YFieldName>Root.DMDemandFunction.Value</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>DMAllocated</Name>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-1663232</ColourArgb>
+          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>Report</TableName>
+          <XFieldName>stage</XFieldName>
+          <YFieldName>Root.TotalDMAllocated</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>DMAllocatedAccum</Name>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16736653</ColourArgb>
+          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>Report</TableName>
+          <XFieldName>stage</XFieldName>
+          <YFieldName>Root.TotalDMAllocated</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>true</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Wt</Name>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-11094807</ColourArgb>
+          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>Report</TableName>
+          <XFieldName>stage</XFieldName>
+          <YFieldName>root.wt</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>DMDemandAccum</Name>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Right</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>Report</TableName>
+          <XFieldName>stage</XFieldName>
+          <YFieldName>Root.DMDemandFunction.Value</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>true</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Axis>
+          <Type>Bottom</Type>
+          <Title />
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Title />
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Right</Type>
           <Inverted>false</Inverted>
           <Minimum>NaN</Minimum>
           <Maximum>NaN</Maximum>
