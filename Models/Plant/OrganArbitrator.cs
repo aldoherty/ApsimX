@@ -12,8 +12,28 @@ using APSIM.Shared.Utilities;
 
 namespace Models.PMF
 {
-    ///<summary>    /// The Arbitrator class determines the allocation of dry matter (DM) and Nitrogen between each of the organs in the crop model. Eacn organ potentially has three pools of biomass:    ///     /// * **Structural biomass** which is fixed within an organ once it is partitioned    /// * **Non-structural biomass** which is available for re-translocation to other organs with high priority demand and is reallocated to other organs when this organ senesces.    /// * **Metabolic biomass** which is generally fixed in an organ but is able to be reallocated and retranslocated in some cases.    ///     /// The process followed for biomass arbitration is shown in Figure 1. Arbitration responds to events broadcast daily by the central APSIM infrastructure:     ///     /// 1. **doPotentialPlantGrowth**.  When this event is broadcast the attached method executes code to determine the potential growth of each organ, the extent of moisture stress that a crop encounters and the potential biomass supplies and demands of each organ based on these.  In addition to demands for structural, non-structural and metabolic biomass (DM and N) each organ may have the following biomass supplies:     /// 	* **Fixation supply**.  From photosynthesis (DM) or symbiotic fixation (N)    /// 	* **Uptake supply**.  Typically uptake of N from the soil by the roots but could be uptake by other organs.    /// 	* **Retranslocation supply**.  Non-structural biomass that may be moved from one organ to meet demands of other organs.    /// 	* **Reallocation supply**. Biomass that can be moved from senescing organs to meet the demands of other organs.    /// 2. **doPotentialPlantPartitioning.** On this event the Arbitrator first executes the DoDMSetup() method to establish the DM supplies and demands from each organ.  It then executes the DoPotentialDMAllocation() method which works out how much biomass each organ would be allocated assuming N supply is not limiting and sends these allocations to the organs.  Each organ then uses their potential DM allocation to determine their N demand (how much N is needed to produce that much DM) and the arbitrator calls DoNSetup() establish N supplies and Demands and begin N arbitration.  Firstly DoNReallocation() is called to redistribute N that the plant has available from senescing organs.  After this step any unmet N demand is considered the plants demand for N uptake from the soil (N Uptake Demand).    /// 3. **doNutrientArbitration.** When this event is broadcast by the model framework the soil arbitrator gets the N uptake demands from each plant (where multiple plants are growing in competition) and their potential uptake from the soil and determines how nuch of their demand that the soil is able to provide.  This value is then passed back to each plant instance as their Nuptake and doNUptakeAllocation() is called to distribute this N between organs.      /// 4. **doActualPlantPartitioning.**  On this event the arbitrator call DoNRetranslocation() and DoNFixation() to satisify any unmet N demands from these sources.  Finally, DoActualDMAllocation is called where DM allocations to each organ are reduced if the N allocation is insufficient to achieve the organs minimum N conentration and final allocations are sent to organs.     /// 
-    /// ![Alt Text](..\\..\\Documentation\\Images\\ArbitrationDiagram.PNG)    ///     /// **Figure 1.**  Schematic showing procedure for arbitration of biomass partitioning.  Orange boxes contain properties that make up the organ/arbitrator interface.  Green boxes are organ specific properties, pink boxes are events that are broadcast each day by the model infrastructure and blue boxes are methods that are triggered by these events.    /// </summary>
+    ///<summary>
+    /// The Arbitrator class determines the allocation of dry matter (DM) and Nitrogen between each of the organs in the crop model. Eacn organ potentially has three pools of biomass:
+    /// 
+    /// * **Structural biomass** which is fixed within an organ once it is partitioned
+    /// * **Non-structural biomass** which is available for re-translocation to other organs with high priority demand and is reallocated to other organs when this organ senesces.
+    /// * **Metabolic biomass** which is generally fixed in an organ but is able to be reallocated and retranslocated in some cases.
+    /// 
+    /// The process followed for biomass arbitration is shown in Figure 1. Arbitration responds to events broadcast daily by the central APSIM infrastructure: 
+    /// 
+    /// 1. **doPotentialPlantGrowth**.  When this event is broadcast the attached method executes code to determine the potential growth of each organ, the extent of moisture stress that a crop encounters and the potential biomass supplies and demands of each organ based on these.  In addition to demands for structural, non-structural and metabolic biomass (DM and N) each organ may have the following biomass supplies: 
+    /// 	* **Fixation supply**.  From photosynthesis (DM) or symbiotic fixation (N)
+    /// 	* **Uptake supply**.  Typically uptake of N from the soil by the roots but could be uptake by other organs.
+    /// 	* **Retranslocation supply**.  Non-structural biomass that may be moved from one organ to meet demands of other organs.
+    /// 	* **Reallocation supply**. Biomass that can be moved from senescing organs to meet the demands of other organs.
+    /// 2. **doPotentialPlantPartitioning.** On this event the Arbitrator first executes the DoDMSetup() method to establish the DM supplies and demands from each organ.  It then executes the DoPotentialDMAllocation() method which works out how much biomass each organ would be allocated assuming N supply is not limiting and sends these allocations to the organs.  Each organ then uses their potential DM allocation to determine their N demand (how much N is needed to produce that much DM) and the arbitrator calls DoNSetup() establish N supplies and Demands and begin N arbitration.  Firstly DoNReallocation() is called to redistribute N that the plant has available from senescing organs.  After this step any unmet N demand is considered the plants demand for N uptake from the soil (N Uptake Demand).
+    /// 3. **doNutrientArbitration.** When this event is broadcast by the model framework the soil arbitrator gets the N uptake demands from each plant (where multiple plants are growing in competition) and their potential uptake from the soil and determines how nuch of their demand that the soil is able to provide.  This value is then passed back to each plant instance as their Nuptake and doNUptakeAllocation() is called to distribute this N between organs.  
+    /// 4. **doActualPlantPartitioning.**  On this event the arbitrator call DoNRetranslocation() and DoNFixation() to satisify any unmet N demands from these sources.  Finally, DoActualDMAllocation is called where DM allocations to each organ are reduced if the N allocation is insufficient to achieve the organs minimum N conentration and final allocations are sent to organs. 
+    /// 
+    /// ![Alt Text](..\\..\\Documentation\\Images\\ArbitrationDiagram.PNG)
+    /// 
+    /// **Figure 1.**  Schematic showing procedure for arbitration of biomass partitioning.  Orange boxes contain properties that make up the organ/arbitrator interface.  Green boxes are organ specific properties, pink boxes are events that are broadcast each day by the model infrastructure and blue boxes are methods that are triggered by these events.
+    /// </summary>
 
     [Serializable]
     [ViewName("UserInterface.Views.GridView")]
@@ -158,7 +178,7 @@ namespace Models.PMF
             /// <summary>Gets or sets the total crop supply.</summary>
             /// <value>crop supply from uptake, fixation, reallocation and remobilisation</value>
             public double TotalPlantSupply { get; set; }
-            
+
             //Biomass Allocation Variables
             /// <summary>Gets or sets the reallocation.</summary>
             /// <value>The amount of biomass reallocated from each organ as it dies</value>
@@ -422,7 +442,7 @@ namespace Models.PMF
                     if (Plant.Phenology != null)
                     {
                         if (Plant.Phenology.Emerged == true)
-                          return N.TotalPlantDemand;
+                            return N.TotalPlantDemand;
                         else return 0;
                     }
                     else
@@ -455,7 +475,7 @@ namespace Models.PMF
                     return 0.0;
             }
         }
-        
+
         /// <summary>Gets the N allocations</summary>
         /// <value>Allocation of N to each organ</value>
         [XmlIgnore]
@@ -562,7 +582,7 @@ namespace Models.PMF
 
         /// <summary>Gets and Sets NH4 Supply</summary>
         /// <value>NH4 supplies from each soil layer</value>
-         [XmlIgnore]
+        [XmlIgnore]
         public double[] PotentialNH4NUptake { get; set; }
 
         //FixME Currently all models are N aware but none are P or K aware.  More programming is needed to make this work! 
@@ -696,7 +716,7 @@ namespace Models.PMF
                         for (int i = 0; i < UptakeDemands.NH4N.Length; i++) { UptakeDemands.NH4N[i] = 0; }
                     }
                 }
-                else 
+                else
                 {
                     DoNUptakeDemandCalculations(soilstate);
 
@@ -715,6 +735,14 @@ namespace Models.PMF
             else
                 return null;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        public double NO3Allocated { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public double NH4Allocated { get; set; }
         /// <summary>
         /// Set the sw uptake for today
         /// </summary>
@@ -735,14 +763,21 @@ namespace Models.PMF
                     {
                         double[] AllocatedNO3Nuptake = MyZone.NO3N;
                         double[] AllocatedNH4Nuptake = MyZone.NH4N;
+
                         DoNUptakeAllocations(AllocatedNO3Nuptake, AllocatedNH4Nuptake); //Fixme, needs to send allocations to arbitrator
                         Plant.Root.DoNitrogenUptake(AllocatedNO3Nuptake, AllocatedNH4Nuptake);
+
+                        NO3Allocated = MathUtilities.Sum(AllocatedNO3Nuptake);
+                        NH4Allocated = MathUtilities.Sum(AllocatedNO3Nuptake);
                     }
                 }
                 else
                 {
                     double[] AllocatedNO3Nuptake = MyZone.NO3N;
                     double[] AllocatedNH4Nuptake = MyZone.NH4N;
+
+                    
+
                     DoNUptakeAllocations(AllocatedNO3Nuptake, AllocatedNH4Nuptake); //Fixme, needs to send allocations to arbitrator
                     Plant.Root.DoNitrogenUptake(AllocatedNO3Nuptake, AllocatedNH4Nuptake);
                 }
@@ -795,20 +830,20 @@ namespace Models.PMF
             {
                 proportion[i] = N.UptakeSupply[i] / N.TotalUptakeSupply;
             }
-            
+
             //Reset actual uptakes to each organ based on uptake allocated by soil arbitrator and the organs proportion of potential uptake
             for (int i = 0; i < Organs.Length; i++)
             {   //Allocation of n involves resetting UptakeSupply from the potential value calculated on DoNUptakeDemandCalculations to an actual value based on what soil arbitrator allocated
                 N.UptakeSupply[i] = MathUtilities.Sum(AllocatedNO3Nuptake) * kgha2gsm * proportion[i];
                 N.UptakeSupply[i] += MathUtilities.Sum(AllocatedNH4Nuptake) * kgha2gsm * proportion[i];
             }
-            
+
             //Recalculate totals based on actual supply
             N.TotalUptakeSupply = MathUtilities.Sum(N.UptakeSupply);
             N.TotalPlantSupply = N.TotalReallocationSupply + N.TotalUptakeSupply + N.TotalFixationSupply + N.TotalRetranslocationSupply;
-            
+
             //Allocate N that the SoilArbitrator has allocated the plant to each organ
-            DoUptake(Organs, N, NArbitrationOption);                 
+            DoUptake(Organs, N, NArbitrationOption);
         }
         /// <summary>Does the nutrient allocations.</summary>
         /// <param name="sender">The sender.</param>
@@ -864,7 +899,7 @@ namespace Models.PMF
             DM.TotalFixationSupply = MathUtilities.Sum(DM.FixationSupply);
             DM.TotalRetranslocationSupply = MathUtilities.Sum(DM.RetranslocationSupply);
             DM.TotalPlantSupply = DM.TotalReallocationSupply + DM.TotalUptakeSupply + DM.TotalFixationSupply + DM.TotalRetranslocationSupply;
-            
+
             // SET OTHER ORGAN VARIABLES AND CALCULATE TOTALS
             for (int i = 0; i < Organs.Length; i++)
             {
@@ -916,11 +951,11 @@ namespace Models.PMF
             DM.TotalMetabolicAllocation = MathUtilities.Sum(DM.MetabolicAllocation);
             DM.TotalNonStructuralAllocation = MathUtilities.Sum(DM.NonStructuralAllocation);
             DM.Allocated = DM.TotalStructuralAllocation + DM.TotalMetabolicAllocation + DM.TotalNonStructuralAllocation;
-            
+
             // Then check it all adds up
-            if (Math.Round(DM.Allocated,8) > Math.Round(DM.TotalPlantSupply,8)) 
+            if (Math.Round(DM.Allocated, 8) > Math.Round(DM.TotalPlantSupply, 8))
                 throw new Exception("Potential DM allocation by " + this.Name + " exceeds DM supply.   Thats not really possible so something has gone a miss");
-            if (Math.Round(DM.Allocated,8) > Math.Round(DM.TotalPlantDemand,8))
+            if (Math.Round(DM.Allocated, 8) > Math.Round(DM.TotalPlantDemand, 8))
                 throw new Exception("Potential DM allocation by " + this.Name + " exceeds DM Demand.   Thats not really possible so something has gone a miss");
 
             // Send potential DM allocation to organs to set this variable for calculating N demand
@@ -962,7 +997,7 @@ namespace Models.PMF
             N.TotalFixationSupply = MathUtilities.Sum(N.FixationSupply);
             N.TotalRetranslocationSupply = MathUtilities.Sum(N.RetranslocationSupply);
             N.TotalPlantSupply = N.TotalReallocationSupply + N.TotalUptakeSupply + N.TotalFixationSupply + N.TotalRetranslocationSupply;
-            
+
             for (int i = 0; i < Organs.Length; i++)
             {
                 BiomassPoolType Demand = Organs[i].NDemand;
@@ -1064,7 +1099,7 @@ namespace Models.PMF
                     BAT.UptakeSupply[i] += MathUtilities.Sum(organNH4Supply) * kgha2gsm;
                 }
             }
-            
+
             //Calculate plant level supply totals.
             BAT.TotalUptakeSupply = MathUtilities.Sum(BAT.UptakeSupply);
             BAT.TotalPlantSupply = BAT.TotalReallocationSupply + BAT.TotalUptakeSupply + BAT.TotalFixationSupply + BAT.TotalRetranslocationSupply;
@@ -1082,7 +1117,7 @@ namespace Models.PMF
         /// <param name="Organs">The organs.</param>
         /// <param name="BAT">The bat.</param>
         /// <param name="Option">The option.</param>
-        virtual public void DoUptake(IArbitration[] Organs, BiomassArbitrationType BAT,  ArbitrationType Option)
+        virtual public void DoUptake(IArbitration[] Organs, BiomassArbitrationType BAT, ArbitrationType Option)
         {
             double BiomassTakenUp = 0;
             if (BAT.TotalUptakeSupply > 0.00000000001)
@@ -1160,7 +1195,7 @@ namespace Models.PMF
 
                 //Set the sink limitation variable.  BAT.NotAllocated changes after each allocation step so it must be caught here and assigned as sink limitation
                 BAT.SinkLimitation = BAT.NotAllocated;
-                
+
                 // Then calculate how much resource is fixed from each supplying organ based on relative fixation supply
                 if (BiomassFixed > 0)
                 {
@@ -1231,7 +1266,7 @@ namespace Models.PMF
                             }
                         }
                         if (UnallocatedRespirationCost > 0.0000000001)
-                            throw new Exception("Crop is trying to Fix excessive amounts of " + BAT.BiomassType +" Check partitioning coefficients are giving realistic nodule size and that FixationRatePotential is realistic");
+                            throw new Exception("Crop is trying to Fix excessive amounts of " + BAT.BiomassType + " Check partitioning coefficients are giving realistic nodule size and that FixationRatePotential is realistic");
                     }
                 }
             }
@@ -1392,7 +1427,7 @@ namespace Models.PMF
                 if (NonStructuralRequirement > 0.0)
                 {
                     double NonStructuralAllocation = Math.Min(FirstPassNotAllocated * BAT.RelativeNonStructuralDemand[i], NonStructuralRequirement);
-                    BAT.NonStructuralAllocation[i] += Math.Max(0,NonStructuralAllocation);
+                    BAT.NonStructuralAllocation[i] += Math.Max(0, NonStructuralAllocation);
                     NotAllocated -= NonStructuralAllocation;
                     TotalAllocated += NonStructuralAllocation;
                 }
@@ -1509,10 +1544,10 @@ namespace Models.PMF
             }
         }
         #endregion
-            /// <summary>Writes documentation for this function by adding to the list of documentation tags.</summary>
-            /// <param name="tags">The list of tags to add to.</param>
-            /// <param name="headingLevel">The level (e.g. H2) of the headings.</param>
-            /// <param name="indent">The level of indentation 1, 2, 3 etc.</param>
+        /// <summary>Writes documentation for this function by adding to the list of documentation tags.</summary>
+        /// <param name="tags">The list of tags to add to.</param>
+        /// <param name="headingLevel">The level (e.g. H2) of the headings.</param>
+        /// <param name="indent">The level of indentation 1, 2, 3 etc.</param>
         public override void Document(List<AutoDocumentation.ITag> tags, int headingLevel, int indent)
         {
             // add a heading.
