@@ -95,9 +95,11 @@ namespace Models.PMF
                 List<IArbitration> organsToArbitrate = new List<IArbitration>();
 
                 foreach (IOrgan organ in Plant.Organs)
-                    if (organ is IArbitration)
-                        organsToArbitrate.Add(organ as IArbitration);
-
+                    //if (!(organ is Root))
+                    {
+                        if (organ is IArbitration)
+                            organsToArbitrate.Add(organ as IArbitration);
+                    }
                 Organs = organsToArbitrate.ToArray();
             }
         }
@@ -163,8 +165,10 @@ namespace Models.PMF
                         supply = organSupply;
                         Supply += MathUtilities.Sum(organSupply);
                     }
+                    
                     Demand += o.WaterDemand;
                 }
+                WaterSupply = Supply;
 
                 double FractionUsed = 0;
                 if (Supply > 0)
@@ -187,7 +191,7 @@ namespace Models.PMF
         /// <summary>
         /// 
         /// </summary>
-        public double waterSupply { get; set; }
+        public double WaterSupply { get; set; }
          
         /// <summary>
         /// Set the sw uptake for today
@@ -203,7 +207,6 @@ namespace Models.PMF
 
             double[] uptake = MyZone.Water;
             double Supply = MathUtilities.Sum(uptake);
-            waterSupply = Supply;
             double Demand = 0;
             foreach (IArbitration o in Organs)
                 Demand += o.WaterDemand;
