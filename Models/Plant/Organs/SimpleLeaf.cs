@@ -135,9 +135,9 @@ namespace Models.PMF.Organs
         /// <summary>The FRGR function</summary>
         [Link]
         IFunction FRGRFunction = null;   // VPD effect on Growth Interpolation Set
-        /// <summary>The dm demand function</summary>
-        [Link]
-        IFunction DMDemandFunction = null;
+        ///// <summary>The dm demand function</summary>
+        //[Link]
+        //IFunction DMDemandFunction = null;
         /// <summary>The cover function</summary>
         [Link(IsOptional = true)]
         IFunction CoverFunction = null;
@@ -172,7 +172,7 @@ namespace Models.PMF.Organs
         public Phenology Phenology = null;
         /// <summary>TE Function</summary>
         [Link(IsOptional = true)]
-        IFunction TranspirationEfficiency = null;
+        IFunction TranspirationEfficiencyCoefficient = null;
         /// <summary></summary>
         [Link(IsOptional = true)]
         IFunction SVPFrac = null;
@@ -206,13 +206,9 @@ namespace Models.PMF.Organs
         {
             get
             {
-                if (SVPFrac != null && TranspirationEfficiency != null)
+                if (SVPFrac != null && TranspirationEfficiencyCoefficient != null)
                 {
-                    double svpMax = MetUtilities.svp(MetData.MaxT) * 0.1;
-                    double svpMin = MetUtilities.svp(MetData.MinT) * 0.1;
-                    double vpd = Math.Max(SVPFrac.Value * (svpMax - svpMin), 0.01);
-
-                    return Photosynthesis.Value / (TranspirationEfficiency.Value / vpd / 0.001);
+                    return Photosynthesis.Value / (TranspirationEfficiencyCoefficient.Value / VPD / 0.001);
                 }
                 return PotentialEP;
             }
@@ -253,6 +249,25 @@ namespace Models.PMF.Organs
         /// <summary>Gets or sets the lai dead.</summary>
         /// <value>The lai dead.</value>
         public double LAIDead { get; set; }
+
+        /// <summary>Gets VPD.</summary>
+        [Units("")]
+        public double VPD
+        {
+            get
+            {
+                if (SVPFrac != null)
+                {
+                    double svpMax = MetUtilities.svp(MetData.MaxT) * 0.1;
+                    double svpMin = MetUtilities.svp(MetData.MinT) * 0.1;
+                    return Math.Max(SVPFrac.Value * (svpMax - svpMin), 0.01);
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
 
 
         /// <summary>Gets the cover dead.</summary>
@@ -310,14 +325,18 @@ namespace Models.PMF.Organs
             {
                 if (Math.Round(Photosynthesis.Value, 8) < 0)
                     throw new Exception(this.Name + " organ is returning a negative DM supply.  Check your parameterisation");
-                return new BiomassSupplyType { Fixation = Photosynthesis.Value, Retranslocation = 0, Reallocation = 0 };
+                return new BiomassSupplyType
+                {
+                    Fixation = DMSupplyFixationFunction == null ? Photosynthesis.Value : DMSupplyFixationFunction.Value,
+                    Retranslocation = DMSupplyReTranslocationFunction == null ? 0 : DMSupplyReTranslocationFunction.Value,
+                    Reallocation = DMSupplyReAllocationFunction == null ? 0 : DMSupplyReAllocationFunction.Value
+                };
             }
         }
         /// <summary>Sets the dm allocation.</summary>
         /// <value>The dm allocation.</value>
         public override BiomassAllocationType DMAllocation
         {
-
             set
             {
                 Live.StructuralWt += value.Structural;
