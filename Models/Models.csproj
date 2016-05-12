@@ -158,6 +158,7 @@
     <Compile Include="Plant\Phenology\PhaseSetFunction.cs" />
     <Compile Include="Plant\Phenology\ZadokPMF.cs" />
     <Compile Include="Plant\PlantTypes.cs" />
+    <Compile Include="Plant\SimpleArbitrator.cs" />
     <Compile Include="PostSimulationTools\Probability.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Core\Apsim.cs" />

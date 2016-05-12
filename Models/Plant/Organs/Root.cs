@@ -64,7 +64,7 @@ namespace Models.PMF.Organs
     {
         #region Links
         /// <summary>The arbitrator</summary>
-        [Link]
+        [Link (IsOptional = true)]
         OrganArbitrator Arbitrator = null;
 
         /// <summary>The soil</summary>
@@ -131,6 +131,10 @@ namespace Models.PMF.Organs
         [Link(IsOptional = true)]
         [Units("0-1")]
         IFunction MaximumRootDepth = null;
+        /// <summary>DM demand function exposed in PMF</summary>
+        [Link(IsOptional = true)]
+        [Units("0-1")]
+        IFunction DMDemandFunction = null;
 
         #endregion
 
@@ -593,6 +597,10 @@ namespace Models.PMF.Organs
         {
             get
             {
+                if(DMDemandFunction != null)
+                {
+                    return new BiomassPoolType { Structural = DMDemandFunction.Value };
+                }
                 double Demand = 0;
                 if ((isGrowing)&&(PartitionFraction != null))
                     Demand = Arbitrator.DMSupply * PartitionFraction.Value;

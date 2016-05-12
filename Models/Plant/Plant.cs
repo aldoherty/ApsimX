@@ -71,7 +71,7 @@ namespace Models.PMF
         public Structure Structure = null;
         /// <summary>The leaf</summary>
         [Link(IsOptional = true)]
-        public Leaf Leaf = null;
+        public ILeaf Leaf = null;
         /// <summary>The root</summary>
         [Link(IsOptional = true)]
         public Root Root = null;
