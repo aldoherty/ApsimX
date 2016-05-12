@@ -78,19 +78,19 @@ namespace Models.PMF.Organs
         /// <summary>The dm demand Function</summary>
         [Link(IsOptional = true)]
         [Units("g/m2/d")]
-        IFunction DMDemandFunction = null;
+        public IFunction DMDemandFunction = null;
         /// <summary>The dm supply fixtion Function</summary>
         [Link(IsOptional = true)]
         [Units("g/m2/d")]
-        IFunction DMSupplyFixationFunction = null;
+        public IFunction DMSupplyFixationFunction = null;
         /// <summary>The dm supply retranslocation Function</summary>
         [Link(IsOptional = true)]
         [Units("g/m2/d")]
-        IFunction DMSupplyReTranslocationFunction = null;
+        public IFunction DMSupplyReTranslocationFunction = null;
         /// <summary>The dm supply reallocation Function</summary>
         [Link(IsOptional = true)]
         [Units("g/m2/d")]
-        IFunction DMSupplyReAllocationFunction = null;
+        public IFunction DMSupplyReAllocationFunction = null;
         /// <summary>The initial wt function</summary>
         [Link(IsOptional = true)]
         [Units("g/m2")]
@@ -217,9 +217,9 @@ namespace Models.PMF.Organs
                     _DMRetranslocationFactor = DMRetranslocationFactor.Value;
                 return new BiomassSupplyType
                 {
-                    Fixation = 0,
-                    Retranslocation = StartLive.NonStructuralWt * _DMRetranslocationFactor,
-                    Reallocation = 0
+                    Fixation = DMSupplyFixationFunction == null? 0: DMSupplyFixationFunction.Value,
+                    Retranslocation = DMSupplyReTranslocationFunction == null? StartLive.NonStructuralWt * _DMRetranslocationFactor : DMSupplyReTranslocationFunction.Value,
+                    Reallocation = DMSupplyReAllocationFunction == null? 0 : DMSupplyReAllocationFunction.Value
                 };
             }
         }
