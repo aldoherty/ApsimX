@@ -88,6 +88,11 @@ namespace Models.PMF
         /// <summary>
         /// 
         /// </summary>
+        public double WaterSupply { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         [Serializable]
         public class BiomassArbitrationType
         {
@@ -608,6 +613,8 @@ namespace Models.PMF
                     }
                     Demand += o.WaterDemand;
                 }
+
+                WaterSupply = Supply;
 
                 double FractionUsed = 0;
                 if (Supply > 0)
