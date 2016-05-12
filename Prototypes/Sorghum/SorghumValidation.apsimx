@@ -1036,30 +1036,27 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <XProperty>[Phenology].Stage</XProperty>
         </LinearInterpolationFunction>
         <MultiplyFunction>
-          <Name>DMDemandFunction</Name>
+          <Name>DMDemandFunction1</Name>
           <VariableReference>
             <Name>PartitionFrac</Name>
             <VariableName>[Root].PartitionFraction.Value</VariableName>
           </VariableReference>
-          <DivideFunction>
-            <Name>AboveGroundBiom</Name>
-            <VariableReference>
-              <Name>DMFixationSupply</Name>
-              <VariableName>[Arbitrator].DMSupply</VariableName>
-            </VariableReference>
-            <AddFunction>
-              <Name>AddFunction</Name>
-              <Constant>
-                <Name>Constant</Name>
-                <Value>1</Value>
-              </Constant>
-              <VariableReference>
-                <Name>PartitionFrac</Name>
-                <VariableName>[Root].PartitionFraction.Value</VariableName>
-              </VariableReference>
-            </AddFunction>
-          </DivideFunction>
+          <VariableReference>
+            <Name>BiomassProduction</Name>
+            <VariableName>[Leaf].DMSupplyFixation.Value</VariableName>
+          </VariableReference>
         </MultiplyFunction>
+        <Constant>
+          <Name>DMDemandFunction</Name>
+          <Memo>
+            <Name>memo</Name>
+            <MemoText><![CDATA[
+<html><body>
+No effect of temperature on root growth is currently captured in the model.<br/>
+</body></html>]]></MemoText>
+          </Memo>
+          <Value>0</Value>
+        </Constant>
         <InitialDM>0.2</InitialDM>
         <SpecificRootLength>40000</SpecificRootLength>
         <NuptakeSupply>0</NuptakeSupply>
@@ -1115,24 +1112,6 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
             <Name>FW</Name>
             <Value>1</Value>
           </Constant>
-          <MultiplyFunction>
-            <Name>RUEOld</Name>
-            <Constant>
-              <Name>RUEBase</Name>
-              <Value>1.25</Value>
-            </Constant>
-            <AddFunction>
-              <Name>AddFunction</Name>
-              <VariableReference>
-                <Name>VariableReference</Name>
-                <VariableName>[Root].PartitionFraction.Value</VariableName>
-              </VariableReference>
-              <Constant>
-                <Name>One</Name>
-                <Value>1</Value>
-              </Constant>
-            </AddFunction>
-          </MultiplyFunction>
           <Constant>
             <Name>RUE</Name>
             <Value>1.25</Value>
@@ -1397,7 +1376,7 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           </AddFunction>
         </DivideFunction>
         <Constant>
-          <Name>TranspirationEfficiency</Name>
+          <Name>TranspirationEfficiencyCoefficient</Name>
           <Value>0.009</Value>
         </Constant>
         <Constant>
@@ -1479,10 +1458,39 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <Name>MaximumNConc</Name>
           <Value>100</Value>
         </Constant>
-        <VariableReference>
-          <Name>SoilWater</Name>
-          <VariableName>[Arbitrator].waterSupply</VariableName>
-        </VariableReference>
+        <MinimumFunction>
+          <Name>DMSupplyFixation</Name>
+          <VariableReference>
+            <Name>BiomTE</Name>
+            <VariableName>[Leaf].BiomTE.Value</VariableName>
+          </VariableReference>
+          <VariableReference>
+            <Name>BiomRUE</Name>
+            <VariableName>[Leaf].Photosynthesis.Value</VariableName>
+          </VariableReference>
+        </MinimumFunction>
+        <MultiplyFunction>
+          <Name>BiomTE</Name>
+          <DivideFunction>
+            <Name>TE</Name>
+            <VariableReference>
+              <Name>TECoeff</Name>
+              <VariableName>[Leaf].TranspirationEfficiencyCoefficient.Value</VariableName>
+            </VariableReference>
+            <VariableReference>
+              <Name>VPD</Name>
+              <VariableName>[Leaf].VPD</VariableName>
+            </VariableReference>
+            <Constant>
+              <Name>g2mm</Name>
+              <Value>0.001</Value>
+            </Constant>
+          </DivideFunction>
+          <VariableReference>
+            <Name>WaterSupply</Name>
+            <VariableName>[Arbitrator].WaterSupply</VariableName>
+          </VariableReference>
+        </MultiplyFunction>
         <BiomassYesterday>0</BiomassYesterday>
         <CohortsInitialised>false</CohortsInitialised>
         <PlantAppearedLeafNo>0</PlantAppearedLeafNo>
@@ -1731,10 +1739,12 @@ Images:
       
 ![title](Test.png)]]></MemoText>
       </Memo>
-      <Model xsi:type="SimpleArbitrator">
+      <OrganArbitrator>
         <Name>Arbitrator</Name>
-        <waterSupply>0</waterSupply>
-      </Model>
+        <NArbitrationOption>RelativeAllocation</NArbitrationOption>
+        <DMArbitrationOption>RelativeAllocation</DMArbitrationOption>
+        <WaterSupply>0</WaterSupply>
+      </OrganArbitrator>
       <CropType>Sorghum</CropType>
     </Plant>
   </Replacements>
@@ -2661,6 +2671,10 @@ namespace Models
               <string>[Grain].PotGrainFillRate.Value</string>
               <string>[Structure].HeightModel.Value as Height</string>
               <string>[Leaf].SoilWater.Value</string>
+              <string>[Leaf].BiomTE.Value</string>
+              <string>[Leaf].Photosynthesis.Value</string>
+              <string>[Leaf].DMSupplyFixation.Value</string>
+              <string>[Leaf].VPD</string>
             </VariableNames>
             <EventNames>
               <string>[Clock].DoReport</string>
@@ -3582,6 +3596,91 @@ namespace Models
           <TableName>Report</TableName>
           <XFieldName>date</XFieldName>
           <YFieldName>Height</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Axis>
+          <Type>Bottom</Type>
+          <Title />
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Title />
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries />
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+      </Graph>
+      <Graph>
+        <Name>BiomSuply</Name>
+        <Series>
+          <Name>TE</Name>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-2793984</ColourArgb>
+          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>Report</TableName>
+          <XFieldName>date</XFieldName>
+          <YFieldName>Leaf.BiomTE.Value</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>RUE</Name>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16736653</ColourArgb>
+          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>Report</TableName>
+          <XFieldName>date</XFieldName>
+          <YFieldName>Leaf.Photosynthesis.Value</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Actual</Name>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16747854</ColourArgb>
+          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>DashDot</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>Report</TableName>
+          <XFieldName>date</XFieldName>
+          <YFieldName>Leaf.DMSupplyFixation.Value</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
