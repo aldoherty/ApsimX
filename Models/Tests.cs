@@ -7,6 +7,7 @@ using System.Text;
 using Models.Core;
 using Models.PostSimulationTools;
 using APSIM.Shared.Utilities;
+using System.ComponentModel;
 
 namespace Models
 {
@@ -17,7 +18,7 @@ namespace Models
     [ViewName("UserInterface.Views.GridView")]
     [PresenterName("UserInterface.Presenters.PropertyPresenter")]
     [ValidParent(ParentType = typeof(PostSimulationTools.PredictedObserved))]
-    public class Tests : Model, ITestable
+    public class Tests : Model, ITestable, JobManager.IRunnable
     {
         /// <summary>
         /// data table
@@ -28,7 +29,7 @@ namespace Models
         /// <summary>
         /// A collection of validated stats.
         /// </summary>
-        [Description("An array of validated regression stats.")]
+        [APSIM.Shared.Soils.Description("An array of validated regression stats.")]
         public MathUtilities.RegrStats[] AcceptedStats { get; set; }
 
         /// <summary>
@@ -50,6 +51,8 @@ namespace Models
         public void Test(bool accept = false, bool GUIrun = false)
         {
             PredictedObserved PO = Parent as PredictedObserved;
+            if (PO == null)
+                return;
             DataStore DS = PO.Parent as DataStore;
             MathUtilities.RegrStats[] stats;
             List<string> statNames = (new MathUtilities.RegrStats()).GetType().GetFields().Select(f => f.Name).ToList(); // use reflection, get names of stats available
@@ -129,7 +132,6 @@ namespace Models
                 AcceptedStatsName = StringUtilities.Build(statNames, " ");
             }
 
-            IEnumerable<string> acc = AcceptedStats[0].GetType().GetFields().Select(f => f.Name).ToList();
             //then make sure the names and order of the accepted stats are the same as the new ones.
             if (StringUtilities.Build(statNames, " ") != AcceptedStatsName)
                 throw new ApsimXException(this, "Names, number or order of accepted stats do not match class MathUtilities.RegrStats. The class has probably changed.");
@@ -230,13 +232,12 @@ namespace Models
             }
         }
 
-        /// <summary>All simulations have run - write all tables</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        [EventSubscribe("AllCompleted")]
-        private void OnAllSimulationsCompleted(object sender, EventArgs e)
+        /// <summary>Run the test</summary>
+        /// <param name="jobManager">The job manager</param>
+        /// <param name="workerThread">Background worker</param>
+        public void Run(JobManager jobManager, BackgroundWorker workerThread)
         {
-            Test();
+            Test(accept: false, GUIrun: false);
         }
 
         /// <summary>Document the stats.</summary>

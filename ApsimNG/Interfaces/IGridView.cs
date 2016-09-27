@@ -6,6 +6,7 @@
 namespace UserInterface.Interfaces
 {
     using System;
+    using System.Drawing;
     using EventArguments;
 
     /// <summary>
@@ -78,11 +79,24 @@ namespace UserInterface.Interfaces
         IGridColumn GetColumn(int columnIndex);
 
         /// <summary>
+        /// Add a separator line to the context menu
+        /// </summary>
+        void AddContextSeparator();
+
+        /// <summary>
         /// Add an action (on context menu) on the series grid.
         /// </summary>
         /// <param name="menuItemText">The text of the menu item</param>
         /// <param name="onClick">The event handler to call when menu is selected</param>
         void AddContextAction(string menuItemText, System.EventHandler onClick);
+
+        /// <summary>
+        /// Add an option (on context menu) on the series grid.
+        /// </summary>
+        /// <param name="menuItemText">The text of the menu item</param>
+        /// <param name="onClick">The event handler to call when menu is selected</param>
+        /// <param name="active">Indicates whether the option is current selected</param>
+        void AddContextOption(string menuItemText, System.EventHandler onClick, bool active);
 
         /// <summary>
         /// Clear all presenter defined context items.
@@ -114,5 +128,8 @@ namespace UserInterface.Interfaces
         /// <summary>Lock the left most number of columns.</summary>
         /// <param name="number"></param>
         void LockLeftMostColumns(int number);
+
+        /// <summary>Get screenshot of grid.</summary>
+        Image GetScreenshot();
     }
 }

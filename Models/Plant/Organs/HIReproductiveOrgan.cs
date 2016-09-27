@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Models.Core;
 using Models.PMF.Functions;
 using Models.PMF.Interfaces;
@@ -11,11 +9,11 @@ namespace Models.PMF.Organs
     /// A harvest index reproductive organ
     /// </summary>
     [Serializable]
-    public class HIReproductiveOrgan : BaseOrgan, Reproductive, AboveGround
+    public class HIReproductiveOrgan : BaseOrgan
     {
         /// <summary>Gets or sets the above ground.</summary>
-        /// <value>The above ground.</value>
-        public Biomass AboveGround { get; set; }
+        [Link]
+        IFunction AboveGroundWt = null;
 
         /// <summary>The water content</summary>
         [Link]
@@ -77,8 +75,8 @@ namespace Models.PMF.Organs
             get
             {
                 double CurrentWt = (Live.Wt + Dead.Wt);
-                if (AboveGround.Wt > 0)
-                    return CurrentWt / AboveGround.Wt;
+                if (AboveGroundWt.Value > 0)
+                    return CurrentWt / AboveGroundWt.Value;
                 else
                     return 0.0;
             }
@@ -91,7 +89,7 @@ namespace Models.PMF.Organs
             {
                 double CurrentWt = (Live.Wt + Dead.Wt);
                 double NewHI = HI + HIIncrement.Value;
-                double NewWt = NewHI * AboveGround.Wt;
+                double NewWt = NewHI * AboveGroundWt.Value;
                 double Demand = Math.Max(0.0, NewWt - CurrentWt);
 
                 return new BiomassPoolType { Structural = Demand };
@@ -122,15 +120,6 @@ namespace Models.PMF.Organs
             {
                 Live.StructuralN += value.Structural;
             }
-        }
-
-        /// <summary>Called when [simulation commencing].</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        [EventSubscribe("Commencing")]
-        private void OnSimulationCommencing(object sender, EventArgs e)
-        {
-            Clear();
         }
 
     }

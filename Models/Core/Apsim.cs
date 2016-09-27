@@ -148,10 +148,6 @@ namespace Models.Core
         /// <returns>The clone of the model</returns>
         public static IModel Clone(IModel model)
         {
-            // Get a list of all child models that we need to notify about the (de)serialisation.
-            List<IModel> modelsToNotify = ChildrenRecursively(model);
-            modelsToNotify.Add(model);
-
             // Get rid of our parent temporarily as we don't want to serialise that.
             IModel parent = model.Parent;
             model.Parent = null;
@@ -160,37 +156,52 @@ namespace Models.Core
             Stream stream = new MemoryStream();
             using (stream)
             {
-                object[] args = new object[] { false };
-                foreach (IModel modelToNotify in modelsToNotify)
-                {
-                    CallEventHandler(modelToNotify, "Serialising", args);
-                }
-
                 formatter.Serialize(stream, model);
-
-                foreach (IModel modelToNotify in modelsToNotify)
-                {
-                    CallEventHandler(modelToNotify, "Serialised", args);
-                }
-
                 stream.Seek(0, SeekOrigin.Begin);
-
-                foreach (IModel modelToNotify in modelsToNotify)
-                {
-                    CallEventHandler(modelToNotify, "Deserialising", args);
-                }
-
                 IModel returnObject = (IModel)formatter.Deserialize(stream);
-                foreach (IModel modelToNotify in modelsToNotify)
-                {
-                    CallEventHandler(modelToNotify, "Deserialised", args);
-                }
 
                 // Reinstate parent
                 model.Parent = parent;
 
                 return returnObject;
             }
+        }
+
+        /// <summary>
+        /// Perform a deep serialise of the model.
+        /// </summary>
+        /// <param name="model">The model to clone</param>
+        /// <returns>The model serialised to a stream.</returns>
+        public static Stream SerialiseToStream(IModel model)
+        {
+            // Get rid of our parent temporarily as we don't want to serialise that.
+            IModel parent = model.Parent;
+            model.Parent = null;
+            Stream stream = new MemoryStream();
+            try
+            {
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, model);
+            }
+            finally
+            {
+                model.Parent = parent;
+            }
+            return stream;
+        }
+
+        /// <summary>
+        /// Deserialise a model from a stream.
+        /// </summary>
+        /// <param name="stream">The stream to deserialise from.</param>
+        /// <returns>The newly created model</returns>
+        public static IModel DeserialiseFromStream(Stream stream)
+        {
+            stream.Seek(0, SeekOrigin.Begin);
+
+            IFormatter formatter = new BinaryFormatter();
+            IModel model = (IModel)formatter.Deserialize(stream);
+            return model;
         }
 
         /// <summary>Adds a new model (as specified by the xml node) to the specified parent.</summary>
@@ -211,9 +222,7 @@ namespace Models.Core
                 CallEventHandler(modelToNotify, "Deserialised", args);
 
             // Corrently parent all models.
-            modelToAdd.Parent = parent;
-            Apsim.ParentAllChildren(modelToAdd);
-            parent.Children.Add(modelToAdd as Model);
+            Add(parent, modelToAdd);
 
             // Ensure the model name is valid.
             Apsim.EnsureNameIsUnique(modelToAdd);
@@ -226,6 +235,16 @@ namespace Models.Core
             Locator(parent).Clear();
 
             return modelToAdd;
+        }
+
+        /// <summary>Add the specified model to the parent.</summary>
+        /// <param name="parent">The parent model</param>
+        /// <param name="modelToAdd">The child model.</param>
+        public static void Add(IModel parent, IModel modelToAdd)
+        {
+            modelToAdd.Parent = parent;
+            Apsim.ParentAllChildren(modelToAdd);
+            parent.Children.Add(modelToAdd as Model);
         }
 
         /// <summary>Deletes the specified model.</summary>
@@ -429,7 +448,7 @@ namespace Models.Core
                 {
                     object linkedObject = null;
 
-                    List<IModel> allMatches = FindAll(model, field.FieldType);
+                    List<IModel> allMatches = null;
 
                     // Special cases: 
                     //   if the type is an IFunction then must match on name and type.
@@ -440,13 +459,18 @@ namespace Models.Core
                         typeof(Biomass).IsAssignableFrom(field.FieldType) ||
                         field.FieldType.Name == "Object")
                     {
+                        allMatches = Children(model, field.FieldType);
                         linkedObject = allMatches.Find(m => m.Name == field.Name);
                         if (linkedObject == null)
                             allMatches.Clear();
                     }
 
-                    else if (allMatches.Count >= 1)
-                        linkedObject = allMatches[0];     // choose closest match.
+                    else 
+                    {
+                        allMatches = FindAll(model, field.FieldType);
+                        if (allMatches.Count >= 1)
+                            linkedObject = allMatches[0];     // choose closest match.
+                    }
 
                     if ((linkedObject == null) && (!link.IsOptional))
                         errorMsg = string.Format(": Found {0} matches for {1} {2} !", allMatches.Count, field.FieldType.FullName, field.Name);
@@ -457,7 +481,7 @@ namespace Models.Core
                     else if (!link.IsOptional)
                         throw new ApsimXException(
                                     model,
-                                    "Cannot resolve [Link] '" + field.ToString() + errorMsg);
+                                    "Cannot resolve [Link] '" + field.ToString() + " in class " + Apsim.FullPath(model) + ". " + errorMsg);
 
                 }
             }
@@ -664,8 +688,8 @@ namespace Models.Core
                 parent.GetType() == typeof(Replacements))
                 return true;
 
-            // Is allowable if this type (t) is an IFunction and the parent is in the PMF namespace.
-            if (parent.GetType().FullName.Contains("PMF") && childType.GetInterface("IFunction") != null)
+            // Functions are currently allowable anywhere
+            if (childType.GetInterface("IFunction") != null)
                 return true;
 
             // Is allowable if one of the valid parents of this type (t) matches the parent type.
@@ -680,7 +704,6 @@ namespace Models.Core
                         return true;
                 }
             }
-
             return false;
         }
 
@@ -701,6 +724,21 @@ namespace Models.Core
             return allowableModels;
         }
 
+        /// <summary>Get a list of allowable child functions for the specified parent.</summary>
+        /// <param name="parent">The parent model.</param>
+        /// <returns>A list of allowable child functions.</returns>
+        public static List<Type> GetAllowableChildFunctions(object parent)
+        {
+            // For now, we allow all functions to be added anywhere
+            List<Type> allowableFunctions = new List<Type>();
+            foreach (Type t in ReflectionUtilities.GetTypesThatHaveInterface(typeof(IFunction)))
+            {
+                allowableFunctions.Add(t);
+            }
+
+            allowableFunctions.Sort(new ReflectionUtilities.TypeComparer());
+            return allowableFunctions;
+        }
         /// <summary>
         /// Gets the locater model for the specified model.
         /// </summary>

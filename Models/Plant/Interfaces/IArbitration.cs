@@ -31,6 +31,11 @@ namespace Models.PMF.Interfaces
     /// </remarks>
     public interface IArbitration
     {
+        /// <summary>
+        /// Name of this Organ
+        /// </summary>
+        string Name { get;}
+
         /// <summary>Sets the dm potential allocation.</summary>
         BiomassPoolType DMPotentialAllocation { set; }
 
@@ -52,11 +57,8 @@ namespace Models.PMF.Interfaces
         /// <summary>Sets the n allocation.</summary>
         BiomassAllocationType NAllocation { set; }
 
-        /// <summary>Gets or sets the maximum nconc.</summary>
-        double MaxNconc { get; set; }
-
         /// <summary>Gets or sets the minimum nconc.</summary>
-        double MinNconc { get; set; }
+        double MinNconc { get; }
 
         /// <summary>Gets or sets the n fixation cost.</summary>
         double NFixationCost { get; set; }
@@ -70,34 +72,27 @@ namespace Models.PMF.Interfaces
         /// <summary>Gets or sets the water demand.</summary>
         double WaterDemand { get; set; }
 
-        /// <summary>Gets the water supply for the given water state.</summary>
-        double[] WaterSupply(List<ZoneWaterAndN> zones);
+        /// <summary>Gets or sets the water supply.</summary>
+        /// <param name="zone">The zone.</param>
+        double[] WaterSupply(ZoneWaterAndN zone);
 
         /// <summary>Gets or sets the water allocation.</summary>
         double WaterAllocation { get; set; }
 
-        /// <summary>Gets or sets the water uptake.</summary>
-        double WaterUptake { get; set; }
-        
-        /// <summary>Gets or sets the water uptake.</summary>
-        double NUptake { get; set; }
-
         /// <summary>Does the water uptake.</summary>
-        /// <param name="uptake">The uptake.</param>
-        void DoWaterUptake(double[] uptake);
+        /// <param name="Amount">The amount.</param>
+        /// <param name="zoneName">Zone name to do water uptake in</param>
+        void DoWaterUptake(double[] Amount, string zoneName);
 
-        /// <summary>Does the water uptake.</summary>
-        /// <param name="NO3NUptake">The NO3NUptake.</param>
-        /// <param name="NH4Uptake">The NH4Uptake.</param>
-        void DoNitrogenUptake(double[] NO3NUptake, double[] NH4Uptake);
+        /// <summary>Does the Nitrogen uptake.</summary>
+        /// <param name="zonesFromSoilArbitrator">List of zones from soil arbitrator</param>
+        void DoNitrogenUptake(List<ZoneWaterAndN> zonesFromSoilArbitrator);
 
-        /// <summary>Gets the Nitrate uptake supply for the given nitrogen state.</summary>
-        /// <param name="zones">water zones</param>
-        double[] NO3NSupply(List<ZoneWaterAndN> zones);
-
-        /// <summary>Gets the Ammonium uptake supply for the given nitrogen state.</summary>
-        /// <param name="zones">water zones</param>
-        double[] NH4NSupply(List<ZoneWaterAndN> zones);
+        /// <summary>Gets the nitrogen supply from the specified zone.</summary>
+        /// <param name="zone">The zone.</param>
+        /// <param name="NO3Supply">The returned NO3 supply</param>
+        /// <param name="NH4Supply">The returned NH4 supply</param>
+        void CalcNSupply(ZoneWaterAndN zone, out double[] NO3Supply, out double[] NH4Supply);
     }
 
 

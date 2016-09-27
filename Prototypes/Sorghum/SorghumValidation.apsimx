@@ -17,6 +17,42 @@ This new framework provides a library of plant organ and process submodels that 
 <br/>
 </body></html>]]></MemoText>
       </Memo>
+      <OrganArbitrator>
+        <Name>Arbitrator</Name>
+        <Memo>
+          <Name>memo</Name>
+          <MemoText><![CDATA[
+<html><body>
+There are a number of passes involved in the allocation of Weight (Wt).  <br/>
+	  Wt_Step 1. Set up DM supplies and demands.  Each organ may have a demand for Structural, Metabolic and Non-structural Wt.  Each organ may supply Fresh DM from photosynthesis and/or stored DM from retranslocation of its Non-structural pool.<br/>
+	  Wt_Step 2. In this step freshly fixed Wt is partitioned to organs based on their relative Structural and Metabolic demands such that if there is not enough freshly fixed Wt to meet these demands the organs with the highest demands get the greatest share of the photosynthesis.<br/>
+	  Wt_Step 3. In the second step any freshly fixed DM that was surplus to Structural and Metabolic demands is partitioned to sink organs.  An organ will be a sink if it is parameterised to have a Non-structural (mobile) component and the capacity of each organ to receive excess DM depends on its structural fraction (which determines the Non-structural Fraction and subsequent sink capacity).  If there is still fresh DM unallocated after the second pass this remains unallocated with the assumption that in this case the plant would down regulate photosynthesis due to lack of sink capacity.<br/>
+	  Wt_Step 4. In this step, Non-structural DM is reallocated from Non-Structural pools if there was insufficient DM to meet the structural and metabolic DM demands of organs.<br/>
+	  The arbitrator then sends a potential DM allocation to each organ that they use to calculate their N demands and then steps through N partitioning routines.  The final pass in biomass partitioning comes after N partitioning<br/>
+	  <br/>
+	  N_Step 1. Set up N supplies and demands.  Each organ may (or may not) supply N in a number of ways.  Each organ has (potentially) a structural, metabolic and Non-structural N Demand.  The structural N demand is that required to grow immobile biomass components, Metabolic N is that required to produce working biomass such as the photosynthetic mechanism in the leaves.  The Non-structural N demand is considered to be the luxury uptake and storage of highly mobile N compounds such as nitrate.<br/>
+      Each of the following 4 steps have a number of processes in common; Firstly the arbitrator determines each organs current N demand (that outstanding after previous N partitioning steps), then it allocates N to each demanding organ (There are three ways that N can be allocated, see below), then it sets for each supplying organ the amount of N that was taken up.<br/>
+	  N_Step 2. NReallocation.  This is the supply of N within the plant by the reallocation of sensing and/or Non-structural N which is the lowest energy form of N available to the plant so is partitioned first.<br/>
+	  N_Step 3. NUptake.  This is the supply of mineral N from the environment (typically by roots from the soil). In this step the arbitrator partitions the potential N uptake supply to satisfy all organs N demands (Structural, Metabolic and Non-structural).  If supply is sufficient this will replenish all Non-structural N that was reallocated in the previous step.  If not the N conc of organs with a Non-structural N component will begin to fall.  If total N demand is less than the uptake supply the crop will leave the surplus mineral N in the soil.<br/>
+	  N_Step 4. NFixation.  This is the supply of symbiotically fixed N and is redundant for Non-fixers!  The arbitrator will asks all N fixing organs (typically nodules) for their potential N fixation supply and then partition this to meet the Structural and Metabolic N demands of organs.  The arbitrator will not fix N to meet Non-structural N demands to minimise the biomass cost of fixation which is metabolically expensive.  Fixation follows uptake to enable the arbitrator to capture the "Lazy" N fixing behaviour of some legumes.  Once fixation is calculated the arbitrator determines the DM cost of this fixation.<br/>
+	  N_Step 5. NRetranslocation.  This is only invoked under sever N shortage when NReallocation and Uptake (and fixation if appropriate) cannot meet structural and metabolic N demands.  It this step the arbitrator will remove Metabolic N from older leaf cohorts to meet the N demand of new leaves and reproductive organs.<br/>
+<br/>
+	<br/>
+      In all of these N partitioning steps there are three options the developer may chose for determining the allocation of N between demanding organs.<br/>
+	  1. RelativeAllocation.  If this option is used all N is partitioned to organs relative to their demand so that the organs with the larger N demand get a larger share of a limited N supply.<br/>
+	  2. PriorityAllocation.  If this option is used the arbitrator steps through all organs in order of priority (set by the order they appear in the IDE) allocating N to meet all of the first organs structural and metabolic N demands before partitioning any to the next organ in the hierarchy.  Once it has stepped through all organs and allocated their minimum (structural and metabolic) N demands it will then step through them again and allocate their luxury (Non-structural) N demands in the same way.<br/>
+	  3. PrioritythenRelativeAllocation.  If this option is used the arbitrator steps through all organs in order of priority allocating N to meet minimum N demands.  However on the second pass it allocated N relative to the organs outstanding demands such that the organ with the greatest luxury N demand will get the greatest share of the N allocation.<br/>
+	  <br/>
+	  Wt_Step 5. Once N is allocated the arbitrator then reduces the Wt allocation of each organ to account for the metabolic cost of N fixation.  The Wt reduction is spread around all organs and an organ will only have its Wt allocation limited until it reaches maximum N conc.<br/>
+	  Wt_Step 6. Then the arbitrator determines if the N allocated to each organ is sufficient for that organ to reach its minimum N concentration.  If not the arbitrator will constrain the biomass growth of that organ and discards the surplus biomass.  This assume that under sever N stress photosynthesis would be down regulated due to N inadequacy limiting sink strength.  <br/>
+      <br/>
+	  Once these steps are complete the Arbitrator finally communicates to each organ its state changes as a result of arbitration.<br/>
+<br/>
+</body></html>]]></MemoText>
+        </Memo>
+        <NArbitrationOption>PriorityThenRelativeAllocation</NArbitrationOption>
+        <DMArbitrationOption>RelativeAllocation</DMArbitrationOption>
+      </OrganArbitrator>
       <CompositeBiomass>
         <Name>AboveGroundLive</Name>
         <Memo>
@@ -277,6 +313,7 @@ The model predicts development of primordia on the apex of the main stem and app
         <PhotoperiodFunction>
           <Name>Photoperiod</Name>
           <Twilight>-6</Twilight>
+          <DayLength>0</DayLength>
         </PhotoperiodFunction>
         <OnEventFunction>
           <Name>FloweringDAS</Name>
@@ -447,6 +484,7 @@ A function is used to provide maturity date as days after sowing(DAS).
             <VariableName>[Phenology].JuvenileToFloralInit.Target.Value</VariableName>
           </VariableReference>
         </AddFunction>
+        <DaysAfterSowing>0</DaysAfterSowing>
       </Phenology>
       <Structure>
         <Name>Structure</Name>
@@ -466,7 +504,7 @@ Though tillering is common in some sorghum varieties under certain agronomic con
           <Name>MainStemNodeAppearanceRate</Name>
           <VariableReference>
             <Name>CurrentLeafNum</Name>
-            <VariableName>[Structure].MainStemNodeNo</VariableName>
+            <VariableName>[Structure].LeafTipsAppeared</VariableName>
           </VariableReference>
           <SubtractFunction>
             <Name>SubtractFunction</Name>
@@ -488,10 +526,10 @@ Though tillering is common in some sorghum varieties under certain agronomic con
             <Value>20</Value>
           </Constant>
         </LessThanFunction>
-        <MainStemFinalNodeNumberFunction>
+        <HoldFunction>
           <Name>MainStemFinalNodeNumber</Name>
           <AddFunction>
-            <Name>FinalLeafNumber</Name>
+            <Name>ValueToHold</Name>
             <VariableReference>
               <Name>LeafNumSeed</Name>
               <VariableName>[Structure].LeafNumSeed.Value</VariableName>
@@ -508,8 +546,30 @@ Though tillering is common in some sorghum varieties under certain agronomic con
               </VariableReference>
             </DivideFunction>
           </AddFunction>
-          <MaximumMainStemNodeNumber>30</MaximumMainStemNodeNumber>
-        </MainStemFinalNodeNumberFunction>
+          <WhenToHold>FloralInitiation</WhenToHold>
+        </HoldFunction>
+        <HeightFunction>
+          <Name>HeightModel</Name>
+          <LinearInterpolationFunction>
+            <Name>PotentialHeight</Name>
+            <XYPairs>
+              <Name>XYPairs</Name>
+              <X>
+                <double>3</double>
+                <double>4</double>
+                <double>5</double>
+                <double>6</double>
+              </X>
+              <Y>
+                <double>20</double>
+                <double>50</double>
+                <double>60</double>
+                <double>1700</double>
+              </Y>
+            </XYPairs>
+            <XProperty>[Phenology].Stage</XProperty>
+          </LinearInterpolationFunction>
+        </HeightFunction>
         <Constant>
           <Name>BranchingRate</Name>
           <Value>0</Value>
@@ -530,10 +590,6 @@ Though tillering is common in some sorghum varieties under certain agronomic con
           <Name>LeafInitiationRate</Name>
           <Value>21.6</Value>
         </Constant>
-        <Constant>
-          <Name>PlantMortality</Name>
-          <Value>0</Value>
-        </Constant>
         <VariableReference>
           <Name>MainStemPrimordiaInitiationRate</Name>
           <VariableName>[Structure].LeafInitiationRate.Value</VariableName>
@@ -542,36 +598,9 @@ Though tillering is common in some sorghum varieties under certain agronomic con
           <Name>BranchMortality</Name>
           <Value>0</Value>
         </Constant>
-        <MultiplyFunction>
-          <Name>MultiplyFunction</Name>
-        </MultiplyFunction>
-        <MinimumFunction>
-          <Name>HeightModel</Name>
-          <MultiplyFunction>
-            <Name>MultiplyFunction</Name>
-            <Constant>
-              <Name>StemHeightFac</Name>
-              <Value>25</Value>
-            </Constant>
-            <DivideFunction>
-              <Name>IndividualStemWeight</Name>
-              <VariableReference>
-                <Name>StemWeight</Name>
-                <VariableName>[Stem].Live.Wt</VariableName>
-              </VariableReference>
-              <VariableReference>
-                <Name>Population</Name>
-                <VariableName>[Structure].TotalStemPopn</VariableName>
-              </VariableReference>
-            </DivideFunction>
-          </MultiplyFunction>
-          <Constant>
-            <Name>MaxStemHeight</Name>
-            <Value>3500</Value>
-          </Constant>
-        </MinimumFunction>
-        <InitialiseStage>Emergence</InitialiseStage>
-        <PrimaryBudNo>1</PrimaryBudNo>
+        <Initialised>false</Initialised>
+        <Germinated>false</Germinated>
+        <Emerged>false</Emerged>
       </Structure>
       <ReproductiveOrgan>
         <Name>Grain</Name>
@@ -828,7 +857,13 @@ Though tillering is common in some sorghum varieties under certain agronomic con
             <Value>0.001</Value>
           </Constant>
         </MultiplyFunction>
+        <Constant>
+          <Name>DMDemandFunction33</Name>
+          <Value>0</Value>
+        </Constant>
+        <MaintenanceRespiration>0</MaintenanceRespiration>
         <RipeStage />
+        <GrowthRespiration>0</GrowthRespiration>
       </ReproductiveOrgan>
       <Root>
         <Name>Root</Name>
@@ -923,6 +958,37 @@ Jones and Kiniry (1986) used a constant root senescence fraction in the CERES-So
           <Name>MinimumNConc</Name>
           <Value>0.01</Value>
         </Constant>
+        <Constant>
+          <Name>MaximumRootDepth</Name>
+          <Value>1000000</Value>
+        </Constant>
+        <LinearInterpolationFunction>
+          <Name>PartitionFraction</Name>
+          <XYPairs>
+            <Name>XYPairs</Name>
+            <X>
+              <double>NaN</double>
+              <double>1</double>
+              <double>2</double>
+              <double>3</double>
+              <double>4</double>
+              <double>5</double>
+              <double>6</double>
+              <double>7</double>
+            </X>
+            <Y>
+              <double>NaN</double>
+              <double>0</double>
+              <double>1</double>
+              <double>1</double>
+              <double>0.33</double>
+              <double>0.33</double>
+              <double>0.087</double>
+              <double>0</double>
+            </Y>
+          </XYPairs>
+          <XProperty>[Phenology].Stage</XProperty>
+        </LinearInterpolationFunction>
         <PhaseLookup>
           <Name>RootFrontVelocity</Name>
           <Memo>
@@ -1004,47 +1070,20 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           </XYPairs>
           <XProperty>[Root].RootLengthDenisty</XProperty>
         </LinearInterpolationFunction>
-        <LinearInterpolationFunction>
-          <Name>PartitionFraction</Name>
-          <XYPairs>
-            <Name>XYPairs</Name>
-            <X>
-              <double>NaN</double>
-              <double>1</double>
-              <double>2</double>
-              <double>3</double>
-              <double>4</double>
-              <double>5</double>
-              <double>6</double>
-              <double>7</double>
-            </X>
-            <Y>
-              <double>NaN</double>
-              <double>0</double>
-              <double>1</double>
-              <double>1</double>
-              <double>0.33</double>
-              <double>0.33</double>
-              <double>0.087</double>
-              <double>0</double>
-            </Y>
-          </XYPairs>
-          <XProperty>[Phenology].Stage</XProperty>
-        </LinearInterpolationFunction>
-        <MultiplyFunction>
-          <Name>DMDemandFunction</Name>
-          <VariableReference>
-            <Name>PartitionFrac</Name>
-            <VariableName>[Root].PartitionFraction.Value</VariableName>
-          </VariableReference>
-          <VariableReference>
-            <Name>BiomassProduction</Name>
-            <VariableName>[Leaf].DMSupplyAboveGround.Value</VariableName>
-          </VariableReference>
-        </MultiplyFunction>
-        <InitialDM>0.2</InitialDM>
-        <SpecificRootLength>40000</SpecificRootLength>
-        <NuptakeSupply>0</NuptakeSupply>
+        <Constant>
+          <Name>InitialDM</Name>
+          <Value>0.2</Value>
+          <Units>g/plant</Units>
+        </Constant>
+        <Constant>
+          <Name>SpecificRootLength</Name>
+          <Value>40</Value>
+          <Units>m/g</Units>
+        </Constant>
+        <MaintenanceRespiration>0</MaintenanceRespiration>
+        <ZoneNamesToGrowRootsIn />
+        <ZoneRootDepths />
+        <ZoneInitialDM />
       </Root>
       <SimpleLeaf>
         <Name>Leaf</Name>
@@ -1054,8 +1093,34 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
         <Biomass>
           <Name>Dead</Name>
         </Biomass>
+        <Constant>
+          <Name>StructuralFraction</Name>
+          <Value>1</Value>
+          <Units>0-1</Units>
+        </Constant>
+        <MultiplyFunction>
+          <Name>InitialWtFunction</Name>
+          <Constant>
+            <Name>InitialPlantWt</Name>
+            <Value>0</Value>
+            <Units>g/plant</Units>
+          </Constant>
+          <VariableReference>
+            <Name>Population</Name>
+            <VariableName>[Plant].Population</VariableName>
+          </VariableReference>
+        </MultiplyFunction>
+        <Constant>
+          <Name>LaiDeadFunction</Name>
+          <Value>0</Value>
+          <Units>m^2/m^2</Units>
+        </Constant>
         <RUEModel>
           <Name>Photosynthesis</Name>
+          <Constant>
+            <Name>RUE</Name>
+            <Value>1.25</Value>
+          </Constant>
           <WeightedTemperatureFunction>
             <Name>FT</Name>
             <XYPairs>
@@ -1096,10 +1161,6 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <Constant>
             <Name>FW</Name>
             <Value>1</Value>
-          </Constant>
-          <Constant>
-            <Name>RUE</Name>
-            <Value>1.25</Value>
           </Constant>
         </RUEModel>
         <MultiplyFunction>
@@ -1360,14 +1421,6 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
             </ExponentialFunction>
           </AddFunction>
         </DivideFunction>
-        <Constant>
-          <Name>TranspirationEfficiencyCoefficient</Name>
-          <Value>0.009</Value>
-        </Constant>
-        <Constant>
-          <Name>SVPFrac</Name>
-          <Value>0.75</Value>
-        </Constant>
         <DivideFunction>
           <Name>LeafPartitioningCoefficient</Name>
           <Constant>
@@ -1390,7 +1443,7 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
                 <Name>PowerFunction</Name>
                 <VariableReference>
                   <Name>LeafNumber</Name>
-                  <VariableName>[Structure].MainStemNodeNo</VariableName>
+                  <VariableName>[Structure].LeafTipsAppeared</VariableName>
                 </VariableReference>
                 <Exponent>2</Exponent>
               </PowerFunction>
@@ -1413,7 +1466,7 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
               </VariableReference>
               <VariableReference>
                 <Name>DMFixationSupply</Name>
-                <VariableName>[Leaf].DMSupplyAboveGround.Value</VariableName>
+                <VariableName>[Arbitrator].DMSupply</VariableName>
               </VariableReference>
             </MultiplyFunction>
             <Start>Emergence</Start>
@@ -1424,7 +1477,7 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <Name>DMRemaining</Name>
           <VariableReference>
             <Name>DMFixationSupply</Name>
-            <VariableName>[Leaf].DMSupplyAboveGround.Value</VariableName>
+            <VariableName>[Arbitrator].DMSupply</VariableName>
           </VariableReference>
           <VariableReference>
             <Name>LeafDMDemand</Name>
@@ -1433,65 +1486,46 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
         </SubtractFunction>
         <Constant>
           <Name>MinimumNConc</Name>
-          <Value>0.003</Value>
+          <Value>0</Value>
         </Constant>
         <Constant>
           <Name>MaximumNConc</Name>
           <Value>100</Value>
         </Constant>
-        <MinimumFunction>
-          <Name>DMSupplyAboveGround</Name>
+		<Constant>
+		  <Name>NReallocationFactor</Name>
+		  <Value>0</Value>
+		</Constant>
+		<Constant>
+		  <Name>SenescenceRate</Name>
+		  <Value>0</Value>
+		</Constant>         
+        <Constant>
+          <Name>DetachmentRateFunction</Name>
+          <Value>0</Value>
+        </Constant>
+        <TEWaterDemandFunction>
+          <Name>TEWaterDemandFunction</Name>
+          <Constant>
+            <Name>SVPFrac</Name>
+            <Value>0.75</Value>
+          </Constant>
+          <Constant>
+            <Name>TranspirationEfficiencyCoefficient</Name>
+            <Value>0.009</Value>
+          </Constant>
           <VariableReference>
-            <Name>BiomTE</Name>
-            <VariableName>[Leaf].BiomTE.Value</VariableName>
-          </VariableReference>
-          <VariableReference>
-            <Name>BiomRUE</Name>
+            <Name>Photosynthesis</Name>
             <VariableName>[Leaf].Photosynthesis.Value</VariableName>
           </VariableReference>
-        </MinimumFunction>
-        <MultiplyFunction>
-          <Name>BiomTE</Name>
-          <DivideFunction>
-            <Name>TE</Name>
-            <VariableReference>
-              <Name>TECoeff</Name>
-              <VariableName>[Leaf].TranspirationEfficiencyCoefficient.Value</VariableName>
-            </VariableReference>
-            <VariableReference>
-              <Name>VPD</Name>
-              <VariableName>[Leaf].VPD</VariableName>
-            </VariableReference>
-            <Constant>
-              <Name>g2mm</Name>
-              <Value>0.001</Value>
-            </Constant>
-          </DivideFunction>
-          <VariableReference>
-            <Name>WaterSupply</Name>
-            <VariableName>[Arbitrator].WaterSupply</VariableName>
-          </VariableReference>
-        </MultiplyFunction>
-        <MultiplyFunction>
-          <Name>DMSupplyFixationFunction</Name>
-          <AddFunction>
-            <Name>AddFunction</Name>
-            <Constant>
-              <Name>One</Name>
-              <Value>1</Value>
-            </Constant>
-            <VariableReference>
-              <Name>RootPartitionFrac</Name>
-              <VariableName>[Root].PartitionFraction.Value</VariableName>
-            </VariableReference>
-          </AddFunction>
-          <VariableReference>
-            <Name>DMSupplyAboveGround</Name>
-            <VariableName>[Leaf].DMSupplyAboveGround.Value</VariableName>
-          </VariableReference>
-        </MultiplyFunction>
-        <BiomassYesterday>0</BiomassYesterday>
+        </TEWaterDemandFunction>
+        <MaintenanceRespiration>0</MaintenanceRespiration>
+        <GrowthRespiration>0</GrowthRespiration>
         <CohortsInitialised>false</CohortsInitialised>
+        <TipsAtEmergence>0</TipsAtEmergence>
+        <CohortsAtInitialisation>0</CohortsAtInitialisation>
+        <InitialisedCohortNo>0</InitialisedCohortNo>
+        <AppearedCohortNo>0</AppearedCohortNo>
         <PlantAppearedLeafNo>0</PlantAppearedLeafNo>
         <Albedo>0</Albedo>
         <Gsmax>0</Gsmax>
@@ -1500,13 +1534,11 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
         <Height>0</Height>
         <FRGR>0</FRGR>
         <PotentialEP>0</PotentialEP>
-        <K>0</K>
         <KDead>0.03</KDead>
-        <DeltaBiomass>0</DeltaBiomass>
         <LAIDead>0</LAIDead>
         <WaterAllocation>0</WaterAllocation>
       </SimpleLeaf>
-      <GenericAboveGroundOrgan>
+      <GenericOrgan>
         <Name>Rachis</Name>
         <MultiplyFunction>
           <Name>CobNumber</Name>
@@ -1552,6 +1584,11 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <Name>StructuralFraction</Name>
           <Value>1</Value>
         </Constant>
+	<Constant>
+	  <Name>SenescenceRate</Name>
+	  <Value>0</Value>
+	  <Units>/d</Units>
+	</Constant>
         <Constant>
           <Name>MinimumNConc</Name>
           <Value>0.003</Value>
@@ -1574,7 +1611,7 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
         <PhaseLookup>
           <Name>DMDemandFunction</Name>
           <PhaseLookupValue>
-            <Name>BetweenFIAndFlower</Name>
+            <Name>BetweenFIAndFlag</Name>
             <MultiplyFunction>
               <Name>MultiplyFunction</Name>
               <VariableReference>
@@ -1587,11 +1624,49 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
               </VariableReference>
             </MultiplyFunction>
             <Start>FloralInitiation</Start>
+            <End>FlagLeaf</End>
+          </PhaseLookupValue>
+          <PhaseLookupValue>
+            <Name>BetweenFlagAndFlowering</Name>
+            <MultiplyFunction>
+              <Name>MultiplyFunction</Name>
+              <VariableReference>
+                <Name>DMFixationSupply</Name>
+                <VariableName>[Arbitrator].DMSupply</VariableName>
+              </VariableReference>
+              <VariableReference>
+                <Name>Stem2FlowerFrac</Name>
+                <VariableName>[Stem].StemToFlowerFrac.Value</VariableName>
+              </VariableReference>
+            </MultiplyFunction>
+            <Start>FlagLeaf</Start>
             <End>Flowering</End>
           </PhaseLookupValue>
         </PhaseLookup>
-      </GenericAboveGroundOrgan>
-      <GenericAboveGroundOrgan>
+        <Constant>
+          <Name>InitialWtFunction</Name>
+          <Value>0</Value>
+          <Units>g/m^2</Units>
+        </Constant>
+        <Constant>
+          <Name>StructuralFraction</Name>
+          <Value>1</Value>
+          <Units>g/g</Units>
+        </Constant>
+        <Constant>
+          <Name>DetachmentRateFunction</Name>
+          <Value>0</Value>
+          <Units>/d</Units>
+        </Constant>
+        <MaintenanceRespiration>0</MaintenanceRespiration>
+        <GrowthRespiration>0</GrowthRespiration>
+         <Constant>
+            <Name>InitialWtFunction</Name>
+            <Value>0</Value>
+            <Units>g/m^2</Units>
+         </Constant>
+      </GenericOrgan>
+      <GenericOrgan>
         <Name>Stem</Name>
         <Biomass>
           <Name>Live</Name>
@@ -1603,6 +1678,11 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <Name>StructuralFraction</Name>
           <Value>0.8</Value>
         </Constant>
+	<Constant>
+	  <Name>SenescenceRate</Name>
+	  <Value>0</Value>
+	  <Units>/d</Units>
+	</Constant>
         <LinearInterpolationFunction>
           <Name>MaximumNConc</Name>
           <XYPairs>
@@ -1618,7 +1698,7 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
               <double>0.005</double>
             </Y>
           </XYPairs>
-          <XProperty>[Structure].MainStemNodeNo</XProperty>
+          <XProperty>[Structure].LeafTipsAppeared</XProperty>
         </LinearInterpolationFunction>
         <Constant>
           <Name>MinimumNConc</Name>
@@ -1650,8 +1730,12 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <SubtractFunction>
             <Name>DMDemandFunction</Name>
             <VariableReference>
-              <Name>DMRemainingAfterLeaf</Name>
-              <VariableName>[Leaf].DMRemaining.Value</VariableName>
+              <Name>DMFixationSupply</Name>
+              <VariableName>[Arbitrator].DMSupply</VariableName>
+            </VariableReference>
+            <VariableReference>
+              <Name>LeafDemand</Name>
+              <VariableName>[Leaf].DMDemandFunction.Value</VariableName>
             </VariableReference>
             <VariableReference>
               <Name>RachisDemand</Name>
@@ -1667,7 +1751,29 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
             <Value>0</Value>
           </Constant>
         </MaximumFunction>
-      </GenericAboveGroundOrgan>
+        <Constant>
+          <Name>InitialWtFunction</Name>
+          <Value>0</Value>
+          <Units>g/m^2</Units>
+        </Constant>
+        <Constant>
+          <Name>StructuralFraction</Name>
+          <Value>1</Value>
+          <Units>g/g</Units>
+        </Constant>
+        <Constant>
+          <Name>DetachmentRateFunction</Name>
+          <Value>0</Value>
+          <Units>/d</Units>
+        </Constant>
+        <MaintenanceRespiration>0</MaintenanceRespiration>
+        <GrowthRespiration>0</GrowthRespiration>
+         <Constant>
+            <Name>InitialWtFunction</Name>
+            <Value>0</Value>
+            <Units>g/m^2</Units>
+         </Constant>
+      </GenericOrgan>
       <Cultivar>
         <Name>Buster</Name>
         <Command />
@@ -1696,57 +1802,8 @@ Peake, A.S., Huth, N.I., Kelly, A.M., Bell, K.L., 2013. Variation in water extra
 <br/><br/>
 </body></html>]]></MemoText>
       </Memo>
-      <Memo>
-        <Name>Memo</Name>
-        <MemoText><![CDATA[# Heading 1 
-## Heading 2
-
-*Italics*  
-**Bold**  
-~~Strikethrough~~  
-<u>Underline</u>   
-<sub>subscript</sub>  
-<sup>subscript</sup>  
-
-External link: [APSIM web site](www.apsim.info)  
-Reference link: [author_year]  
-
-1. List item 1
-2. List item 2
-3. List item 3
-
-
-* Bullet list item 1
-* Bullet list item 2
-
-Tables:
-
-| Column 1  | Column 2 |
-|-----------|----------|
-|    10.6   |   10.5   |
-|    text   |   asdf   |
-
-Horizontal rule:
----
-
-```
-      Code block line 1
-      Code block line 2 
-```
-
-Images:      
-      
-![title](Test.png)]]></MemoText>
-      </Memo>
-      <OrganArbitrator>
-        <Name>Arbitrator</Name>
-        <NArbitrationOption>RelativeAllocation</NArbitrationOption>
-        <DMArbitrationOption>RelativeAllocation</DMArbitrationOption>
-        <WaterSupply>0</WaterSupply>
-        <NO3Allocated>0</NO3Allocated>
-        <NH4Allocated>0</NH4Allocated>
-      </OrganArbitrator>
       <CropType>Sorghum</CropType>
+      <SowingDate>0001-01-01T00:00:00</SowingDate>
     </Plant>
   </Replacements>
   <DataStore>
@@ -2248,7 +2305,6 @@ namespace Models
             </Water>
             <SoilWater>
               <Name>SoilWater</Name>
-              <residueinterception>0</residueinterception>
               <SummerDate>1-Nov</SummerDate>
               <SummerU>1.5</SummerU>
               <SummerCona>6.5</SummerCona>
@@ -2289,6 +2345,7 @@ namespace Models
                 <double>0.3</double>
                 <double>0.3</double>
               </SWCON>
+              <residueinterception>0</residueinterception>
             </SoilWater>
             <SoilNitrogen>
               <Name>SoilNitrogen</Name>
@@ -2527,11 +2584,13 @@ namespace Models
             <NaturalVegetation>Unknown</NaturalVegetation>
             <Latitude>0</Latitude>
             <Longitude>0</Longitude>
+            <Area>0</Area>
           </Soil>
           <Plant>
             <Name>Sorghum</Name>
             <ResourceName>Sorghum</ResourceName>
             <CropType>Sorghum</CropType>
+            <SowingDate>0001-01-01T00:00:00</SowingDate>
           </Plant>
           <SurfaceOrganicMatter>
             <Name>SurfaceOrganicMatter</Name>
@@ -2586,6 +2645,7 @@ namespace Models
             <emissivity>0.96</emissivity>
             <gsmax>0.01</gsmax>
             <r50>200</r50>
+            <RadIntTotal>0</RadIntTotal>
           </MicroClimate>
           <Fertiliser>
             <Name>Fertiliser</Name>
@@ -2618,7 +2678,7 @@ namespace Models
               <string>[Sorghum].Grain.Live.NConc as nconc</string>
               <string>[Sorghum].Grain.NumberFunction.Value as grainno</string>
               <string>[Sorghum].Grain.Size as grainsize </string>
-              <string>[Sorghum].Structure.MainStemNodeNo as leafno</string>
+              <string>[Sorghum].Structure.LeafTipsAppeared as leafno</string>
               <string>[Sorghum].Phenology.LeafAppearance1.RemainingLeaves.Value</string>
               <string>[Sorghum].Phenology.LeafAppearance2.RemainingLeaves.Value</string>
               <string>[Sorghum].Phenology.LeafAppearance1._RemainingLeaves</string>
@@ -2649,7 +2709,7 @@ namespace Models
               <string>[Leaf].LAI</string>
               <string>[Phenology].TTEmergToFlagLeaf.Value</string>
               <string>[Structure].MainStemFinalNodeNumber.Value</string>
-              <string>[Structure].MainStemNodeNo</string>
+              <string>[Structure].LeafTipsAppeared</string>
               <string>[Leaf].CoverGreen</string>
               <string>[Leaf].RadIntTot</string>
               <string>[Weather].Radn</string>
@@ -2661,7 +2721,7 @@ namespace Models
               <string>[Husk].Live.wt</string>
               <string>[Rachis].Live.wt</string>
               <string>[Grain].Live.wt</string>
-              <string>[Structure].Height</string>
+              <string />
               <string>[Grain].FinalGrainNum.Value</string>
               <string>[Leaf].LeafPartitioningCoefficient.Value</string>
               <string>[Leaf].DMDemandFunction.Value</string>
@@ -2670,21 +2730,6 @@ namespace Models
               <string>[Grain].DMDemandFunction.Value</string>
               <string>[Leaf].DMRemaining.Value</string>
               <string>[Grain].PotGrainFillRate.Value</string>
-              <string>[Structure].HeightModel.Value as Height</string>
-              <string>[Leaf].SoilWater.Value</string>
-              <string>[Leaf].BiomTE.Value</string>
-              <string>[Leaf].Photosynthesis.Value</string>
-              <string>[Leaf].DMSupplyFixation.Value</string>
-              <string>[Leaf].VPD</string>
-              <string>[Arbitrator].WaterSupply</string>
-              <string>[Arbitrator].NO3Allocated</string>
-              <string>[Root].DMDemand</string>
-              <string>[Root].DMDemandFunction.Value</string>
-              <string>[Arbitrator].DMSupply</string>
-              <string>[Arbitrator].DMDemand</string>
-              <string>[Leaf].LeafPartioningCoefficient.Value</string>
-              <string>[Root].PartitionFraction.Value</string>
-              <string>[Root].TotalDMAllocated</string>
             </VariableNames>
             <EventNames>
               <string>[Clock].DoReport</string>
@@ -2867,27 +2912,6 @@ namespace Models
           <Cumulative>false</Cumulative>
           <CumulativeX>false</CumulativeX>
         </Series>
-        <Series>
-          <Name>BiomProd</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Right</YAxis>
-          <ColourArgb>-990142</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Dash</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Leaf.DMSupplyFixation.Value</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>true</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
         <Axis>
           <Type>Bottom</Type>
           <Title />
@@ -3029,7 +3053,7 @@ namespace Models
           <LineThickness>Normal</LineThickness>
           <TableName>Report</TableName>
           <XFieldName>date</XFieldName>
-          <YFieldName>Structure.MainStemNodeNo</YFieldName>
+          <YFieldName>Structure.LeafTipsAppeared</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -3299,27 +3323,6 @@ namespace Models
           <TableName>Report</TableName>
           <XFieldName>date</XFieldName>
           <YFieldName>stage</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Series>
-          <Name>RootDemand</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-1663232</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Dash</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Root.DMDemandFunction.Value</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -3621,467 +3624,6 @@ namespace Models
         <Axis>
           <Type>Left</Type>
           <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries />
-        <IncludeInDocumentation>false</IncludeInDocumentation>
-      </Graph>
-      <Graph>
-        <Name>Height</Name>
-        <Series>
-          <Name>Height</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-16736653</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Height</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Axis>
-          <Type>Bottom</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <Axis>
-          <Type>Left</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries />
-        <IncludeInDocumentation>false</IncludeInDocumentation>
-      </Graph>
-      <Graph>
-        <Name>BiomSuply</Name>
-        <Series>
-          <Name>TE</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-2793984</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Leaf.BiomTE.Value</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Series>
-          <Name>RUE</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-16736653</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Leaf.Photosynthesis.Value</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Series>
-          <Name>Actual</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-16747854</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>DashDot</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Leaf.DMSupplyFixation.Value</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Axis>
-          <Type>Bottom</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <Axis>
-          <Type>Left</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries />
-        <IncludeInDocumentation>false</IncludeInDocumentation>
-      </Graph>
-      <Graph>
-        <Name>WaterAvail</Name>
-        <Series>
-          <Name>SWAvail</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-16736653</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Arbitrator.WaterSupply</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Series>
-          <Name>SWAvail1</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Right</YAxis>
-          <ColourArgb>-11094807</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Arbitrator.NO3Allocated</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Axis>
-          <Type>Bottom</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <Axis>
-          <Type>Left</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <Axis>
-          <Type>Right</Type>
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries />
-        <IncludeInDocumentation>false</IncludeInDocumentation>
-      </Graph>
-      <Graph>
-        <Name>DMArbitrator</Name>
-        <Series>
-          <Name>Supply</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-16736653</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Arbitrator.DMSupply</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Series>
-          <Name>Demand</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-11094807</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>date</XFieldName>
-          <YFieldName>Arbitrator.DMDemand</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Axis>
-          <Type>Bottom</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <Axis>
-          <Type>Left</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries />
-        <IncludeInDocumentation>false</IncludeInDocumentation>
-      </Graph>
-      <Graph>
-        <Name>Partitinoing</Name>
-        <Series>
-          <Name>Leaf</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-16736653</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>stage</XFieldName>
-          <YFieldName>Leaf.LeafPartitioningCoefficient.Value</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Series>
-          <Name>Root</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-11094807</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>stage</XFieldName>
-          <YFieldName>Root.PartitionFraction.Value</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Axis>
-          <Type>Bottom</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <Axis>
-          <Type>Left</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries />
-        <IncludeInDocumentation>false</IncludeInDocumentation>
-      </Graph>
-      <Graph>
-        <Name>RootDetail</Name>
-        <Series>
-          <Name>DMDemand</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-3376729</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>stage</XFieldName>
-          <YFieldName>Root.DMDemandFunction.Value</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Series>
-          <Name>DMAllocated</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-1663232</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>stage</XFieldName>
-          <YFieldName>Root.TotalDMAllocated</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Series>
-          <Name>DMAllocatedAccum</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-16736653</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>stage</XFieldName>
-          <YFieldName>Root.TotalDMAllocated</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>true</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Series>
-          <Name>Wt</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Left</YAxis>
-          <ColourArgb>-11094807</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>stage</XFieldName>
-          <YFieldName>root.wt</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>false</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Series>
-          <Name>DMDemandAccum</Name>
-          <Type>Scatter</Type>
-          <XAxis>Bottom</XAxis>
-          <YAxis>Right</YAxis>
-          <ColourArgb>-16777216</ColourArgb>
-          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
-          <Marker>None</Marker>
-          <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
-          <LineThickness>Normal</LineThickness>
-          <TableName>Report</TableName>
-          <XFieldName>stage</XFieldName>
-          <YFieldName>Root.DMDemandFunction.Value</YFieldName>
-          <ShowInLegend>true</ShowInLegend>
-          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-          <Cumulative>true</Cumulative>
-          <CumulativeX>false</CumulativeX>
-        </Series>
-        <Axis>
-          <Type>Bottom</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <Axis>
-          <Type>Left</Type>
-          <Title />
-          <Inverted>false</Inverted>
-          <Minimum>NaN</Minimum>
-          <Maximum>NaN</Maximum>
-          <Interval>NaN</Interval>
-        </Axis>
-        <Axis>
-          <Type>Right</Type>
           <Inverted>false</Inverted>
           <Minimum>NaN</Minimum>
           <Maximum>NaN</Maximum>

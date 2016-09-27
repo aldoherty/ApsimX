@@ -5,6 +5,9 @@ using System.Text;
 using Models.Factorial;
 using UserInterface.Views;
 using Models.Core;
+using APSIM.Shared.Utilities;
+using Models.Core.Runners;
+
 namespace UserInterface.Presenters
 {
     /// <summary>
@@ -40,15 +43,19 @@ namespace UserInterface.Presenters
         {
             try
             {
+                List<JobManager.IRunnable> jobs = new List<JobManager.IRunnable>();
                 Simulation simulation = Experiment.CreateSpecificSimulation(ListView.MemoLines[ListView.CurrentPosition.Y]);
-                Commands.RunCommand run = new Commands.RunCommand(Apsim.Parent(Experiment, typeof(Simulations)) as Simulations,
-                                                                  simulation,
+                jobs.Add(simulation);
+                jobs.Add(new RunAllCompletedEvent(ExplorerPresenter.ApsimXFile));
+
+                Commands.RunCommand run = new Commands.RunCommand(jobs, 
+                                                                  simulation.Name,
                                                                   ExplorerPresenter);
                 run.Do(null);
             }
             catch (Exception err)
             {
-                ExplorerPresenter.ShowMessage(err.Message, Models.DataStore.ErrorLevel.Error);
+                ExplorerPresenter.MainPresenter.ShowMessage(err.Message, Models.DataStore.ErrorLevel.Error);
             }
         }
 

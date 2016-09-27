@@ -29,6 +29,21 @@ namespace Models.PMF.Functions
         [Description("XProperty")]
         public string XProperty { get; set; }
 
+        /// <summary>Constructor</summary>
+        public LinearInterpolationFunction() { }
+
+        /// <summary>Constructor</summary>
+        /// <param name="xproperty">x property</param>
+        /// <param name="x">x values.</param>
+        /// <param name="y">y values.</param>
+        public LinearInterpolationFunction(string xproperty, double[] x, double[] y)
+        {
+            XProperty = xproperty;
+            XYPairs = new XYPairs();
+            XYPairs.X = x;
+            XYPairs.Y = y;
+        }
+
         /// <summary>Called when [loaded].</summary>
         [EventSubscribe("Loaded")]
         private void OnLoaded()
@@ -120,8 +135,8 @@ namespace Models.PMF.Functions
             {
                 IVariable xProperty = Apsim.GetVariableObject(this, XProperty);
                 string xName = XProperty;
-                if (xProperty != null && xProperty.Units != string.Empty)
-                    xName += " (" + xProperty.Units + ")";
+                if (xProperty != null && xProperty.UnitsLabel != string.Empty)
+                    xName += " " + xProperty.UnitsLabel;
 
                 tags.Add(new AutoDocumentation.Paragraph("<i>" + Name + "</i> is calculated as a function of <i>" + StringUtilities.RemoveTrailingString(XProperty, ".Value") + "</i>", indent));
 

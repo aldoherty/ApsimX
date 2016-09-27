@@ -15,6 +15,11 @@ namespace Models.PMF.Organs
     [Serializable]
     public class TreeCanopy : GenericOrgan, AboveGround, ICanopy
     {
+
+        /// <summary>The met data</summary>
+        [Link]
+        public IWeather MetData = null;
+
         #region Canopy interface
         /// <summary>Gets the canopy. Should return null if no canopy present.</summary>
         public string CanopyType { get { return Plant.CropType; } }
@@ -50,7 +55,7 @@ namespace Models.PMF.Organs
         {
             get
             {
-                return 1.0 - Math.Exp(-K * LAI);
+                return Math.Min(1.0 - Math.Exp(-K * LAI), 0.999999999);
             }
         }
         
@@ -196,7 +201,7 @@ namespace Models.PMF.Organs
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         [EventSubscribe("DoDailyInitialisation")]
-        private void OnDoDailyInitialisation(object sender, EventArgs e)
+        protected override void OnDoDailyInitialisation(object sender, EventArgs e)
         {
             EP = 0;
         }

@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Models.Core;
 using Models.PMF.Functions;
 using Models.PMF.Phen;
@@ -14,7 +12,7 @@ namespace Models.PMF.Organs
     /// This organ uses a generic model for plant reproductive components.  Yield is calculated from its components in terms of organ number and size (for example, grain number and grain size).  
     /// </summary>
     [Serializable]
-    public class ReproductiveOrgan : BaseOrgan, Reproductive, AboveGround
+    public class ReproductiveOrgan : BaseOrgan
     {
         #region Parameter Input Classes
         /// <summary>The phenology</summary>
@@ -47,15 +45,26 @@ namespace Models.PMF.Organs
         [Link]
         [Units("g/g")]
         IFunction MinimumNConc = null;
+
         /// <summary>The dm demand function</summary>
         [Link]
         [Units("g/m2/d")]
         IFunction DMDemandFunction = null;
+
+        /// <summary>Dry matter conversion efficiency</summary>
+        [Link(IsOptional = true)]
+        public IFunction DMConversionEfficiencyFunction = null;
+
+        /// <summary>The proportion of biomass repired each day</summary>
+        [Link(IsOptional = true)]
+        public IFunction MaintenanceRespirationFunction = null;
+
         #endregion
 
         #region Class Fields
         /// <summary>The ripe stage</summary>
-        public string RipeStage = "";
+        [Description("Stage at which this organ becomes ripe")]
+        public string RipeStage { get; set; }
         /// <summary>The _ ready for harvest</summary>
         protected bool _ReadyForHarvest = false;
         /// <summary>The potential dm allocation</summary>
@@ -75,7 +84,6 @@ namespace Models.PMF.Organs
         public double MaximumSize { get; set; }
 
         /// <summary>Gets the live f wt.</summary>
-        /// <value>The live f wt.</value>
         [Units("g/m^2")]
         public double LiveFWt
         {
@@ -89,7 +97,6 @@ namespace Models.PMF.Organs
         }
 
         /// <summary>Gets the size.</summary>
-        /// <value>The size.</value>
         [Units("g")]
         public double Size
         {
@@ -103,7 +110,6 @@ namespace Models.PMF.Organs
         }
 
         /// <summary>Gets the size of the f.</summary>
-        /// <value>The size of the f.</value>
         [Units("g")]
         private double FSize
         {
@@ -122,7 +128,6 @@ namespace Models.PMF.Organs
         }
 
         /// <summary>Gets the ready for harvest.</summary>
-        /// <value>The ready for harvest.</value>
         public int ReadyForHarvest
         {
             get
@@ -158,6 +163,15 @@ namespace Models.PMF.Organs
         {
             if (data.Plant == Plant)
                 Clear();
+
+
+            if (DMConversionEfficiencyFunction != null)
+                DMConversionEfficiency = DMConversionEfficiencyFunction.Value;
+            else
+                DMConversionEfficiency = 1.0;
+
+
+
         }
 
         /// <summary>
@@ -180,15 +194,6 @@ namespace Models.PMF.Organs
         #endregion
 
         #region Event handlers
-
-        /// <summary>Called when [simulation commencing].</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        [EventSubscribe("Commencing")]
-        private void OnSimulationCommencing(object sender, EventArgs e)
-        {
-            Clear();
-        }
 
         /// <summary>Called when crop is being cut.</summary>
         /// <param name="sender">The sender.</param>
@@ -217,19 +222,29 @@ namespace Models.PMF.Organs
         {
             if (Phenology.OnDayOf(RipeStage))
                 _ReadyForHarvest = true;
+
+
+            MaintenanceRespiration = 0;
+            //Do Maintenance respiration
+            if (MaintenanceRespirationFunction != null)
+
+            {
+                MaintenanceRespiration += Live.MetabolicWt * MaintenanceRespirationFunction.Value;
+                Live.MetabolicWt *= (1 - MaintenanceRespirationFunction.Value);
+                MaintenanceRespiration += Live.NonStructuralWt * MaintenanceRespirationFunction.Value;
+                Live.NonStructuralWt *= (1 - MaintenanceRespirationFunction.Value);
+            }
+
         }
         /// <summary>Gets or sets the dm demand.</summary>
-        /// <value>The dm demand.</value>
         public override BiomassPoolType DMDemand
         {
             get
             {
-                return new BiomassPoolType { Structural = DMDemandFunction.Value };
+                return new BiomassPoolType { Structural = DMDemandFunction.Value/ DMConversionEfficiency};
             }
         }
         /// <summary>Sets the dm potential allocation.</summary>
-        /// <value>The dm potential allocation.</value>
-        /// <exception cref="System.Exception">Invalid allocation of potential DM in + Name</exception>
         public override BiomassPoolType DMPotentialAllocation
         {
             set
@@ -243,11 +258,15 @@ namespace Models.PMF.Organs
             }
         }
         /// <summary>Sets the dm allocation.</summary>
-        /// <value>The dm allocation.</value>
         public override BiomassAllocationType DMAllocation
-        { set { Live.StructuralWt += value.Structural; } }
+        {
+            set
+            {
+                GrowthRespiration = value.Structural *(1- DMConversionEfficiency);
+                Live.StructuralWt += value.Structural * DMConversionEfficiency;
+            }
+        }
         /// <summary>Gets or sets the n demand.</summary>
-        /// <value>The n demand.</value>
         public override BiomassPoolType NDemand
         {
             get
@@ -258,7 +277,6 @@ namespace Models.PMF.Organs
             }
         }
         /// <summary>Sets the n allocation.</summary>
-        /// <value>The n allocation.</value>
         public override BiomassAllocationType NAllocation
         {
             set
@@ -267,8 +285,7 @@ namespace Models.PMF.Organs
             }
         }
         /// <summary>Gets or sets the maximum nconc.</summary>
-        /// <value>The maximum nconc.</value>
-        public override double MaxNconc
+        public double MaxNconc
         {
             get
             {
@@ -276,7 +293,6 @@ namespace Models.PMF.Organs
             }
         }
         /// <summary>Gets or sets the minimum nconc.</summary>
-        /// <value>The minimum nconc.</value>
         public override double MinNconc
         {
             get

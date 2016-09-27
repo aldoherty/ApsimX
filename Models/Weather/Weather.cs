@@ -75,6 +75,11 @@ namespace Models
         private int evaporationIndex;
 
         /// <summary>
+        /// The index of the evaporation column in the weather file
+        /// </summary>
+        private int rainfallHoursIndex;
+
+        /// <summary>
         /// The index of the vapor pressure column in the weather file
         /// </summary>
         private int vapourPressureIndex;
@@ -117,17 +122,25 @@ namespace Models
             get
             {
                 Simulation simulation = Apsim.Parent(this, typeof(Simulation)) as Simulation;
-
-                return PathUtilities.GetAbsolutePath(this.FileName, simulation.FileName);
+                if (simulation != null)
+                    return PathUtilities.GetAbsolutePath(this.FileName, simulation.FileName);
+                else
+                    return this.FileName;
             }
-
             set
             {
-
                 Simulations simulations = Apsim.Parent(this, typeof(Simulations)) as Simulations;
-                this.FileName = PathUtilities.GetRelativePath(value, simulations.FileName);
+                if (simulations != null)
+                    this.FileName = PathUtilities.GetRelativePath(value, simulations.FileName);
+                else
+                    this.FileName = value;
             }
         }
+
+        /// <summary>
+        /// Used to hold the WorkSheet Name if data retrieved from an Excel file
+        /// </summary>
+        public string ExcelWorkSheetName { get; set; }
 
         /// <summary>
         /// Gets the start date of the weather file
@@ -211,11 +224,17 @@ namespace Models
                 this.todaysMetData.Mint = value;
             }
         }
-
         /// <summary>
-        /// Gets or sets the rainfall (mm)
+        /// Daily Mean temperature (oC)
         /// </summary>
+        [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "Reviewed.")]
         [XmlIgnore]
+        public double MeanT { get { return (MaxT + MinT) / 2; } }
+
+            /// <summary>
+            /// Gets or sets the rainfall (mm)
+            /// </summary>
+            [XmlIgnore]
         public double Rain
         {
             get
@@ -262,6 +281,23 @@ namespace Models
                 this.todaysMetData.PanEvap = value;
                 }
             }
+
+        /// <summary>
+        /// Gets or sets the number of hours rainfall occured in
+        /// </summary>
+        [XmlIgnore]
+        public double RainfallHours
+        {
+            get
+            {
+                return this.MetData.RainfallHours;
+            }
+
+            set
+            {
+                this.todaysMetData.RainfallHours = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the vapor pressure (hPa)
@@ -430,6 +466,7 @@ namespace Models
             this.radiationIndex = 0;
             this.rainIndex = 0;
             this.evaporationIndex = 0;
+            this.rainfallHoursIndex = 0;
             this.vapourPressureIndex = 0;
             this.windIndex = 0;
             this.CO2 = 350;
@@ -455,6 +492,7 @@ namespace Models
         public DataTable GetAllData()
         {
             this.reader = null;
+
             if (this.OpenDataFile())
             {
                 List<string> metProps = new List<string>();
@@ -463,6 +501,7 @@ namespace Models
                 metProps.Add("radn");
                 metProps.Add("rain");
                 metProps.Add("wind");
+
                 return this.reader.ToTable(metProps);
             }
             else
@@ -494,7 +533,7 @@ namespace Models
 
             if (this.clock.Today != this.reader.GetDateFromValues(values))
             {
-                throw new Exception("Non consecutive dates found in file: " + this.FileName);
+                throw new Exception("Non consecutive dates found in file: " + this.FileName + ".  Another posibility is that you have two clock objects in your simulation, there should only be one");
             }
 
             this.todaysMetData.Today = this.clock.Today;
@@ -527,6 +566,16 @@ namespace Models
                 {
                 this.todaysMetData.PanEvap = Convert.ToSingle(values[this.evaporationIndex]);
                 }
+
+            if (this.rainfallHoursIndex == -1)
+            {
+                // If Evap is not present in the weather file assign a default value
+                this.todaysMetData.RainfallHours = double.NaN;
+            }
+            else
+            {
+                this.todaysMetData.RainfallHours = Convert.ToSingle(values[this.rainfallHoursIndex]);
+            }
 
             if (this.vapourPressureIndex == -1)
             {
@@ -565,12 +614,14 @@ namespace Models
                 if (this.reader == null)
                 {
                     this.reader = new ApsimTextFile();
-                    this.reader.Open(this.FullFileName);
+                    this.reader.Open(this.FullFileName, this.ExcelWorkSheetName);
+
                     this.maximumTemperatureIndex = StringUtilities.IndexOfCaseInsensitive(this.reader.Headings, "Maxt");
                     this.minimumTemperatureIndex = StringUtilities.IndexOfCaseInsensitive(this.reader.Headings, "Mint");
                     this.radiationIndex = StringUtilities.IndexOfCaseInsensitive(this.reader.Headings, "Radn");
                     this.rainIndex = StringUtilities.IndexOfCaseInsensitive(this.reader.Headings, "Rain");
                     this.evaporationIndex = StringUtilities.IndexOfCaseInsensitive(this.reader.Headings, "Evap");
+                    this.rainfallHoursIndex = StringUtilities.IndexOfCaseInsensitive(this.reader.Headings, "RainHours");
                     this.vapourPressureIndex = StringUtilities.IndexOfCaseInsensitive(this.reader.Headings, "VP");
                     this.windIndex = StringUtilities.IndexOfCaseInsensitive(this.reader.Headings, "Wind");
                     if (this.maximumTemperatureIndex == -1)
@@ -599,7 +650,8 @@ namespace Models
                 }
                 else
                 {
-                    this.reader.SeekToDate(this.reader.FirstDate);
+                    if (this.reader.IsExcelFile != true) 
+                        this.reader.SeekToDate(this.reader.FirstDate);
                 }
 
                 return true;
@@ -792,6 +844,11 @@ namespace Models
             /// Pan Evaporation (mm) (Class A pan) (NaN if not present)
             /// </summary>
             public double PanEvap;
+
+            /// <summary>
+            /// Pan Evaporation (mm) (Class A pan) (NaN if not present)
+            /// </summary>
+            public double RainfallHours;
 
             /// <summary>
             /// The vapor pressure (hPa)

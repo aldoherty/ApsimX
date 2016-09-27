@@ -65,7 +65,7 @@ namespace Models.PMF.Organs
         /// <summary>Gets or sets the water uptake.</summary>
         /// <value>The water uptake.</value>
         [Units("mm")]
-        public override double WaterUptake
+        public double WaterUptake
         {
             get
             {
@@ -118,46 +118,10 @@ namespace Models.PMF.Organs
                 Clear();
         }
 
-        /// <summary>Gets or sets the water supply.</summary>
-        /// <value>The water supply.</value>
-        public override double[] WaterSupply(List<ZoneWaterAndN> zones)
-        {
-            throw new NotImplementedException("SimpleRoot doesn't currently support SoilArbitrator");
-            //CurrentPaddockName = Apsim.FullPath(this);
-            //OurName = CurrentPaddockName;
-            //if (OurName.Length > 0)
-            //    OurName += ".";
-            //OurName += Plant.Name;
-
-            //TalkDirectlyToRoot = RootModelExists;
-
-            //double[] SWSupply;
-            //if (TalkDirectlyToRoot)
-            //{
-            //    SWSupply = (double[])Apsim.Get(this, OurName + "Root.SWSupply");
-            //    return SWSupply;
-            //}
-
-            //else
-            //{
-            //    double Total = 0;
-            //    //foreach (Zone SubPaddock in this.Models)
-            //    //{
-            //    //    SWSupply = (double[]) this.Get(SubPaddock.FullPath + "." + Plant.Name + "Root.SWSupply");
-            //    //    Total += MathUtilities.Sum(SWSupply);
-            //    //}
-            //    return Total;
-            //}
-        }
-
-
-
-
         /// <summary>Does the water uptake.</summary>
         /// <param name="Amount">The amount.</param>
-        /// <exception cref="System.NotImplementedException">
-        /// </exception>
-        public override void DoWaterUptake(double[] Amount)
+        /// <param name="zoneName">Zone name to do water uptake in</param>
+        public override void DoWaterUptake(double[] Amount, string zoneName)
         {
             Uptake = MathUtilities.Sum(Amount);
             throw new NotImplementedException();

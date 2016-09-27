@@ -18,114 +18,114 @@
           <RegrStats>
             <Name>Biomass</Name>
             <n>88</n>
-            <Slope>1.0745493369152621</Slope>
-            <Intercept>-105.39442492578496</Intercept>
-            <SEslope>0.045453096642361406</SEslope>
-            <SEintercept>62.298134909696017</SEintercept>
-            <R2>0.866643771914506</R2>
-            <RMSE>251.52076592565666</RMSE>
-            <NSE>0.81627281404869079</NSE>
-            <ME>-13.054843212550603</ME>
-            <MAE>192.02910148612619</MAE>
-            <RSR>0.42619171392701238</RSR>
+            <Slope>1.1302704369215508</Slope>
+            <Intercept>-25.197610366246408</Intercept>
+            <SEslope>0.0437088859893132</SEslope>
+            <SEintercept>59.907515158757946</SEintercept>
+            <R2>0.88604602677827016</R2>
+            <RMSE>284.52837142163776</RMSE>
+            <NSE>0.76488686866475686</NSE>
+            <ME>136.16019847126756</ME>
+            <MAE>215.29989499603897</MAE>
+            <RSR>0.48212175973132937</RSR>
           </RegrStats>
           <RegrStats>
             <Name>FinalLeafNo</Name>
             <n>21</n>
-            <Slope>0.7984994640943549</Slope>
-            <Intercept>4.1786862655023178</Intercept>
-            <SEslope>0.16231227118434816</SEslope>
-            <SEintercept>3.0553040895425059</SEintercept>
-            <R2>0.56020287514603306</R2>
-            <RMSE>0.79582242575422135</RMSE>
-            <NSE>0.28724544480171543</NSE>
-            <ME>0.39047619047619025</ME>
-            <MAE>0.63809523809523794</MAE>
-            <RSR>0.82390160947385249</RSR>
+            <Slope>0.744908896034333</Slope>
+            <Intercept>6.0909508497926339</Intercept>
+            <SEslope>0.12404415561864009</SEslope>
+            <SEintercept>2.3349597241174238</SEintercept>
+            <R2>0.654936466121814</R2>
+            <RMSE>1.4125289714685836</RMSE>
+            <NSE>-1.2454448017148971</NSE>
+            <ME>1.2952380952380949</ME>
+            <MAE>1.2952380952380949</MAE>
+            <RSR>1.4623675525585531</RSR>
           </RegrStats>
           <RegrStats>
             <Name>FloweringDAS</Name>
             <n>90</n>
-            <Slope>0.66963417371137979</Slope>
-            <Intercept>20.066856188124923</Intercept>
-            <SEslope>0.07619449051959308</SEslope>
-            <SEintercept>4.30466279638195</SEintercept>
-            <R2>0.46743316609923558</R2>
-            <RMSE>5.4751965971805774</RMSE>
-            <NSE>0.32719882297199565</NSE>
-            <ME>1.5333333333333334</ME>
-            <MAE>4.2444444444444445</MAE>
-            <RSR>0.8156749403986614</RSR>
+            <Slope>0.660831400713203</Slope>
+            <Intercept>24.149580642211532</Intercept>
+            <SEslope>0.085775424697465477</SEslope>
+            <SEintercept>4.8459445954835036</SEintercept>
+            <R2>0.40280180195792958</R2>
+            <RMSE>7.7595818902252143</RMSE>
+            <NSE>-0.35133787187351961</NSE>
+            <ME>5.1222222222222227</ME>
+            <MAE>6.344444444444445</MAE>
+            <RSR>1.1559943800168235</RSR>
           </RegrStats>
           <RegrStats>
             <Name>GPSM</Name>
             <n>84</n>
-            <Slope>0.93756066240992664</Slope>
-            <Intercept>81.63018877189279</Intercept>
-            <SEslope>0.041961500058534079</SEslope>
-            <SEintercept>100.59284444226564</SEintercept>
-            <R2>0.85891877992055721</R2>
-            <RMSE>468.14042607340326</RMSE>
-            <NSE>0.85016878721081013</NSE>
-            <ME>-47.608655663501459</ME>
-            <MAE>353.5715158887906</MAE>
-            <RSR>0.38476942169958467</RSR>
+            <Slope>0.91314151378373787</Slope>
+            <Intercept>243.72221179814437</Intercept>
+            <SEslope>0.042323525022052957</SEslope>
+            <SEintercept>101.46071429412203</SEintercept>
+            <R2>0.85022620691774586</R2>
+            <RMSE>479.55133327382987</RMSE>
+            <NSE>0.84277550506188947</NSE>
+            <ME>63.939869107468866</ME>
+            <MAE>352.63623926480238</MAE>
+            <RSR>0.394148163461757</RSR>
           </RegrStats>
           <RegrStats>
             <Name>GrainSize</Name>
             <n>78</n>
-            <Slope>0.45439592459171385</Slope>
-            <Intercept>0.18489573590466588</Intercept>
-            <SEslope>0.12372565545384413</SEslope>
-            <SEintercept>0.0355165689548877</SEintercept>
-            <R2>0.15072464156802412</R2>
-            <RMSE>0.073976492635050531</RMSE>
-            <NSE>-0.77791803264575066</NSE>
-            <ME>0.031228164698962869</ME>
-            <MAE>0.053773518438655438</MAE>
-            <RSR>1.3248110098102275</RSR>
+            <Slope>0.55106381334924837</Slope>
+            <Intercept>0.14864942583131591</Intercept>
+            <SEslope>0.12955161080847127</SEslope>
+            <SEintercept>0.037188962156780275</SEintercept>
+            <R2>0.19229118729593731</R2>
+            <RMSE>0.070991421369856658</RMSE>
+            <NSE>-0.63732919026410761</NSE>
+            <ME>0.022208043630592925</ME>
+            <MAE>0.052893626644057723</MAE>
+            <RSR>1.2713527403474325</RSR>
           </RegrStats>
           <RegrStats>
             <Name>GrainWt</Name>
             <n>103</n>
-            <Slope>0.88701144066273563</Slope>
-            <Intercept>81.155940773928592</Intercept>
-            <SEslope>0.040649066153829287</SEslope>
-            <SEintercept>28.305508587160162</SEintercept>
-            <R2>0.82500665641644877</R2>
-            <RMSE>146.1298236013358</RMSE>
-            <NSE>0.81897629248788828</NSE>
-            <ME>12.713851506953418</ME>
-            <MAE>116.63534777591519</MAE>
-            <RSR>0.42339838897744186</RSR>
+            <Slope>0.914354681712213</Slope>
+            <Intercept>95.75619598455</Intercept>
+            <SEslope>0.041314875267857584</SEslope>
+            <SEintercept>28.769137087830213</SEintercept>
+            <R2>0.82904461593462175</R2>
+            <RMSE>152.07557483682686</RMSE>
+            <NSE>0.80394556602613787</NSE>
+            <ME>43.877098189752409</ME>
+            <MAE>120.75609127348352</MAE>
+            <RSR>0.44062568339501024</RSR>
           </RegrStats>
           <RegrStats>
             <Name>LAImax</Name>
             <n>74</n>
-            <Slope>0.981273708694993</Slope>
-            <Intercept>0.13393961385707787</Intercept>
-            <SEslope>0.048289954479601487</SEslope>
-            <SEintercept>0.14538445684202028</SEintercept>
-            <R2>0.85152213783175168</R2>
-            <RMSE>0.55801578262561491</RMSE>
-            <NSE>0.82789741406520467</NSE>
-            <ME>0.083500938695601309</ME>
-            <MAE>0.43907130118533089</MAE>
-            <RSR>0.41203989529419938</RSR>
+            <Slope>1.1772771828021083</Slope>
+            <Intercept>0.3011610930854709</Intercept>
+            <SEslope>0.052598561164264576</SEslope>
+            <SEintercept>0.15835619080503832</SEintercept>
+            <R2>0.87433846617545052</R2>
+            <RMSE>1.0117112837547935</RMSE>
+            <NSE>0.434272072492925</NSE>
+            <ME>0.77865159514266857</ME>
+            <MAE>0.78602361814650268</MAE>
+            <RSR>0.74704950004249138</RSR>
           </RegrStats>
           <RegrStats>
             <Name>MaturityDAS</Name>
             <n>90</n>
-            <Slope>0.883541179558095</Slope>
-            <Intercept>14.997510894005288</Intercept>
-            <SEslope>0.051587312878193105</SEslope>
-            <SEintercept>5.8706447681597327</SEintercept>
-            <R2>0.76923336911746421</R2>
-            <RMSE>8.2307013336923145</RMSE>
-            <NSE>0.73864387065984172</NSE>
-            <ME>1.8777777777777778</ME>
-            <MAE>6.1444444444444448</MAE>
-            <RSR>0.50838191583443437</RSR>
+            <Slope>0.903041557972695</Slope>
+            <Intercept>16.378462707942731</Intercept>
+            <SEslope>0.052102910179873535</SEslope>
+            <SEintercept>5.9293198266713967</SEintercept>
+            <R2>0.77342605798613517</R2>
+            <RMSE>9.7016607971121225</RMSE>
+            <NSE>0.63687915833352782</NSE>
+            <ME>5.4555555555555557</ME>
+            <MAE>8.1222222222222218</MAE>
+            <RSR>0.59923798748740542</RSR>
           </RegrStats>
         </AcceptedStats>
         <AcceptedStatsName>Name n Slope Intercept SEslope SEintercept R2 RMSE NSE ME MAE RSR</AcceptedStatsName>
@@ -323,6 +323,7 @@ Note.  The BMW1 trail consists of data from unreplicated plots.
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -342,6 +343,7 @@ Note.  The BMW1 trail consists of data from unreplicated plots.
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -779,7 +781,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>3</SummerCona>
@@ -818,6 +819,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -1027,6 +1029,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Report>
               <Name>HarvestReport</Name>
@@ -1397,6 +1400,7 @@ namespace Models
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -1416,6 +1420,7 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -1846,7 +1851,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>3</SummerCona>
@@ -1885,6 +1889,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -2094,6 +2099,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Operations>
               <Name>IrrigSchedule</Name>
@@ -2644,7 +2650,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -2683,6 +2688,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -2892,6 +2898,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -3073,7 +3080,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -3114,6 +3120,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -3335,6 +3342,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -3515,7 +3523,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -3554,6 +3561,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -3763,6 +3771,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -3935,7 +3944,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -3974,6 +3982,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -4183,6 +4192,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -4328,7 +4338,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -4369,6 +4378,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -4590,6 +4600,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -4735,7 +4746,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -4776,6 +4786,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -4997,6 +5008,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -5134,7 +5146,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -5175,6 +5186,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -5396,6 +5408,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -5515,7 +5528,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -5552,6 +5564,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -5749,6 +5762,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -5894,7 +5908,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -5935,6 +5948,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -6156,6 +6170,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -6275,7 +6290,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -6312,6 +6326,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -6509,6 +6524,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -6637,7 +6653,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -6676,6 +6691,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -6885,6 +6901,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -7004,7 +7021,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -7041,6 +7057,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -7238,6 +7255,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -7375,7 +7393,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -7416,6 +7433,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -7637,6 +7655,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -7774,7 +7793,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -7815,6 +7833,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -8036,6 +8055,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -8181,7 +8201,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -8222,6 +8241,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -8443,6 +8463,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -8579,7 +8600,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -8618,6 +8638,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -8827,6 +8848,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -8972,7 +8994,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -9013,6 +9034,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -9234,6 +9256,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -9353,7 +9376,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -9390,6 +9412,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -9587,6 +9610,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -9705,7 +9729,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -9740,6 +9763,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -9925,6 +9949,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -10035,7 +10060,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -10070,6 +10094,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -10255,6 +10280,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -10418,7 +10444,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -10455,6 +10480,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -10652,6 +10678,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -10823,7 +10850,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -10860,6 +10886,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -11057,6 +11084,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -11211,7 +11239,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -11246,6 +11273,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -11431,6 +11459,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -11611,7 +11640,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -11650,6 +11678,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -11859,6 +11888,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Specifications>
               <string>[Operations]</string>
@@ -11889,6 +11919,7 @@ namespace Models
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -11908,6 +11939,7 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -12327,7 +12359,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>2.5</SummerCona>
@@ -12366,6 +12397,7 @@ namespace Models
                   <double>0.5</double>
                   <double>0.5</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -12575,6 +12607,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Report>
               <Name>HarvestReport</Name>
@@ -13461,6 +13494,7 @@ The data for two trials from near Katherine, Northern Territory, Australia, have
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -13480,6 +13514,7 @@ The data for two trials from near Katherine, Northern Territory, Australia, have
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -13914,7 +13949,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>1.5</SummerU>
                 <SummerCona>6.6</SummerCona>
@@ -13953,6 +13987,7 @@ namespace Models
                   <double>0.7</double>
                   <double>0.7</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -14164,6 +14199,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Operations>
               <Name>IrrigSchedule</Name>
@@ -14607,6 +14643,7 @@ namespace Models
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -14626,6 +14663,7 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -15060,7 +15098,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>1.5</SummerU>
                 <SummerCona>6.6</SummerCona>
@@ -15099,6 +15136,7 @@ namespace Models
                   <double>0.7</double>
                   <double>0.7</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -15310,6 +15348,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Operations>
               <Name>IrrigSchedule</Name>
@@ -15749,6 +15788,7 @@ namespace Models
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -15768,6 +15808,7 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -15963,7 +16004,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>1.5</SummerU>
                 <SummerCona>6.6</SummerCona>
@@ -16002,6 +16042,7 @@ namespace Models
                   <double>0.7</double>
                   <double>0.7</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -16199,6 +16240,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Operations>
               <Name>IrrigSchedule</Name>
@@ -16690,6 +16732,7 @@ namespace Models
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -16709,6 +16752,7 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -16903,7 +16947,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>1.5</SummerU>
                 <SummerCona>6.6</SummerCona>
@@ -16942,6 +16985,7 @@ namespace Models
                   <double>0.7</double>
                   <double>0.7</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -17139,6 +17183,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Operations>
               <Name>IrrigSchedule</Name>
@@ -17551,6 +17596,7 @@ namespace Models
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -17570,6 +17616,7 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -17764,7 +17811,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>1.5</SummerU>
                 <SummerCona>6.6</SummerCona>
@@ -17803,6 +17849,7 @@ namespace Models
                   <double>0.7</double>
                   <double>0.7</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -18000,6 +18047,7 @@ namespace Models
               <RecordNumber>0</RecordNumber>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Operations>
               <Name>IrrigSchedule</Name>
@@ -18500,6 +18548,7 @@ namespace Models
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -18519,6 +18568,7 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -18762,7 +18812,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>6</SummerU>
                 <SummerCona>3.5</SummerCona>
@@ -18797,6 +18846,7 @@ namespace Models
                   <double>0.3</double>
                   <double>0.3</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -18961,6 +19011,7 @@ namespace Models
               <NaturalVegetation>Unknown</NaturalVegetation>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Manager>
               <Name>CropManagement</Name>
@@ -19928,6 +19979,7 @@ namespace Models
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -19947,6 +19999,7 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -20187,7 +20240,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>6</SummerU>
                 <SummerCona>3.5</SummerCona>
@@ -20222,6 +20274,7 @@ namespace Models
                   <double>0.3</double>
                   <double>0.3</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -20386,6 +20439,7 @@ namespace Models
               <NaturalVegetation>Unknown</NaturalVegetation>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Manager>
               <Name>CropManagement</Name>
@@ -21255,6 +21309,7 @@ namespace Models
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -21274,6 +21329,7 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -21514,7 +21570,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>6</SummerU>
                 <SummerCona>3.5</SummerCona>
@@ -21549,6 +21604,7 @@ namespace Models
                   <double>0.3</double>
                   <double>0.3</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -21713,6 +21769,7 @@ namespace Models
               <NaturalVegetation>Unknown</NaturalVegetation>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
             </Soil>
             <Manager>
               <Name>CropManagement</Name>
@@ -22639,6 +22696,7 @@ Testing of APSIM Maize, Soil Water, Soil Nitrogen, Manure, and Soil Temperature 
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <MicroClimate>
               <Name>MicroClimate</Name>
@@ -22658,6 +22716,7 @@ Testing of APSIM Maize, Soil Water, Soil Nitrogen, Manure, and Soil Temperature 
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -23079,7 +23138,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-jun</SummerDate>
                 <SummerU>7.975</SummerU>
                 <SummerCona>3.675</SummerCona>
@@ -23120,6 +23178,7 @@ namespace Models
                   <double>0.348</double>
                   <double>0.364</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -23323,6 +23382,7 @@ namespace Models
               <Country>USA</Country>
               <Latitude>0</Latitude>
               <Longitude>0</Longitude>
+              <Area>0</Area>
               <DataSource>for Mahli al-Kaisi paper (Marsden Research farm), tes file , long term soybean</DataSource>
               <Comments>all data only from WSS</Comments>
             </Soil>
@@ -23435,6 +23495,7 @@ namespace Models
             <Name>Maize</Name>
             <ResourceName>Maize</ResourceName>
             <CropType>Maize</CropType>
+            <SowingDate>0001-01-01T00:00:00</SowingDate>
           </Plant>
           <MicroClimate>
             <Name>MicroClimate</Name>
@@ -23454,6 +23515,7 @@ namespace Models
             <emissivity>0.96</emissivity>
             <gsmax>0.01</gsmax>
             <r50>200</r50>
+            <RadIntTotal>0</RadIntTotal>
           </MicroClimate>
           <Irrigation>
             <Name>Irrigation</Name>
@@ -23893,7 +23955,6 @@ namespace Models
             </Water>
             <SoilWater>
               <Name>SoilWater</Name>
-              <residueinterception>0</residueinterception>
               <SummerDate>1-Jun</SummerDate>
               <SummerU>9</SummerU>
               <SummerCona>3.8</SummerCona>
@@ -23934,6 +23995,7 @@ namespace Models
                 <double>0.348</double>
                 <double>0.364</double>
               </SWCON>
+              <residueinterception>0</residueinterception>
             </SoilWater>
             <SoilNitrogen>
               <Name>SoilNitrogen</Name>
@@ -24161,6 +24223,7 @@ namespace Models
             <Country>USA</Country>
             <Latitude>42.48</Latitude>
             <Longitude>-92.23</Longitude>
+            <Area>0</Area>
             <DataSource>from DSSAT soybean williams 1982</DataSource>
           </Soil>
           <Report>
@@ -24441,6 +24504,7 @@ namespace Models
             <Name>Maize</Name>
             <ResourceName>Maize</ResourceName>
             <CropType>Maize</CropType>
+            <SowingDate>0001-01-01T00:00:00</SowingDate>
           </Plant>
           <MicroClimate>
             <Name>MicroClimate</Name>
@@ -24460,6 +24524,7 @@ namespace Models
             <emissivity>0.96</emissivity>
             <gsmax>0.01</gsmax>
             <r50>200</r50>
+            <RadIntTotal>0</RadIntTotal>
           </MicroClimate>
           <Irrigation>
             <Name>Irrigation</Name>
@@ -24881,7 +24946,6 @@ namespace Models
             </Water>
             <SoilWater>
               <Name>SoilWater</Name>
-              <residueinterception>0</residueinterception>
               <SummerDate>1-Jun</SummerDate>
               <SummerU>9.1</SummerU>
               <SummerCona>4</SummerCona>
@@ -24916,6 +24980,7 @@ namespace Models
                 <double>0.408</double>
                 <double>0.408</double>
               </SWCON>
+              <residueinterception>0</residueinterception>
             </SoilWater>
             <SoilNitrogen>
               <Name>SoilNitrogen</Name>
@@ -25107,6 +25172,7 @@ namespace Models
             <Country>USA</Country>
             <Latitude>0</Latitude>
             <Longitude>0</Longitude>
+            <Area>0</Area>
             <DataSource>for varius test</DataSource>
             <Comments>from WSS and saxton</Comments>
           </Soil>
@@ -25752,7 +25818,6 @@ Testing of APSIM Maize under New Zealand conditions was undertaken using the dat
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>4.4</SummerCona>
@@ -25789,6 +25854,7 @@ Testing of APSIM Maize under New Zealand conditions was undertaken using the dat
                   <double>0.7</double>
                   <double>0.7</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -25949,6 +26015,7 @@ Testing of APSIM Maize under New Zealand conditions was undertaken using the dat
               <State>Canterbury</State>
               <Latitude>999999</Latitude>
               <Longitude>999999</Longitude>
+              <Area>0</Area>
               <DataSource>Profile descriptions provided by Trevor Webb and data for functional horizions based on SWAMP project results</DataSource>
             </Soil>
             <MicroClimate>
@@ -25969,6 +26036,7 @@ Testing of APSIM Maize under New Zealand conditions was undertaken using the dat
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Irrigation>
               <Name>Irrigation</Name>
@@ -26191,6 +26259,7 @@ namespace Models
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <Manager>
               <Name>ExtraVariables</Name>
@@ -26497,7 +26566,7 @@ namespace Models
                 <string>[Maize].Leaf.DeadCohortNo</string>
                 <string>[Maize].Leaf.InitialisedCohortNo</string>
                 <string>[Maize].Structure.MainStemFinalNodeNo</string>
-                <string>[Maize].Structure.MainStemNodeNo</string>
+                <string>[Maize].Structure.LeafTipsAppeared</string>
                 <string>[Maize].Structure.MainStemPrimordiaNo</string>
                 <string>[Maize].Leaf.CohortArea[1:30]</string>
                 <string>[Maize].Leaf.CohortSLA[1:30]</string>
@@ -26697,7 +26766,7 @@ namespace Models
                 <LineThickness>Normal</LineThickness>
                 <TableName>Report</TableName>
                 <XFieldName>Clock.Today</XFieldName>
-                <YFieldName>Maize.Structure.MainStemNodeNo</YFieldName>
+                <YFieldName>Maize.Structure.LeafTipsAppeared</YFieldName>
                 <ShowInLegend>true</ShowInLegend>
                 <IncludeSeriesNameInLegend>false</IncludeSeriesNameInLegend>
                 <Cumulative>false</Cumulative>
@@ -28104,7 +28173,7 @@ namespace Models
                 <Line>Solid</Line>
                 <LineThickness>Normal</LineThickness>
                 <TableName>Report</TableName>
-                <XFieldName>Maize.Structure.MainStemNodeNo</XFieldName>
+                <XFieldName>Maize.Structure.LeafTipsAppeared</XFieldName>
                 <YFieldName>Maize.Structure.MainStemNodeAppearanceRate.Value</YFieldName>
                 <ShowInLegend>true</ShowInLegend>
                 <IncludeSeriesNameInLegend>false</IncludeSeriesNameInLegend>
@@ -32141,7 +32210,6 @@ This trial was conducted to provide data for parametersising the Leaf Area model
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>4.4</SummerCona>
@@ -32174,6 +32242,7 @@ This trial was conducted to provide data for parametersising the Leaf Area model
                   <double>0.7</double>
                   <double>0.7</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -32326,6 +32395,7 @@ This trial was conducted to provide data for parametersising the Leaf Area model
               <State>Canterbury</State>
               <Latitude>999999</Latitude>
               <Longitude>999999</Longitude>
+              <Area>0</Area>
               <DataSource>Profile descriptions provided by Trevor Webb and data for functional horizions based on SWAMP project results</DataSource>
             </Soil>
             <Irrigation>
@@ -32501,11 +32571,13 @@ TreatNo = 2
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Plant>
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <Manager>
               <Name>ExtraVariables</Name>
@@ -35077,7 +35149,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>4.4</SummerCona>
@@ -35110,6 +35181,7 @@ namespace Models
                   <double>0.7</double>
                   <double>0.7</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -35262,6 +35334,7 @@ namespace Models
               <State>Canterbury</State>
               <Latitude>999999</Latitude>
               <Longitude>999999</Longitude>
+              <Area>0</Area>
               <DataSource>Profile descriptions provided by Trevor Webb and data for functional horizions based on SWAMP project results</DataSource>
             </Soil>
             <Irrigation>
@@ -35323,11 +35396,13 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Plant>
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <Operations>
               <Name>Fert</Name>
@@ -35492,7 +35567,7 @@ namespace Models
                 <string>[Maize].Leaf.DeadCohortNo</string>
                 <string>[Maize].Leaf.InitialisedCohortNo</string>
                 <string>[Maize].Structure.MainStemFinalNodeNo</string>
-                <string>[Maize].Structure.MainStemNodeNo</string>
+                <string>[Maize].Structure.LeafTipsAppeared</string>
                 <string>[Maize].Structure.MainStemPrimordiaNo</string>
                 <string>[Maize].Leaf.CohortArea[1:30]</string>
                 <string>[Maize].Leaf.CohortSLA[1:30]</string>
@@ -36408,7 +36483,6 @@ namespace Models
               </Water>
               <SoilWater>
                 <Name>SoilWater</Name>
-                <residueinterception>0</residueinterception>
                 <SummerDate>1-Nov</SummerDate>
                 <SummerU>9</SummerU>
                 <SummerCona>4.4</SummerCona>
@@ -36441,6 +36515,7 @@ namespace Models
                   <double>0.7</double>
                   <double>0.7</double>
                 </SWCON>
+                <residueinterception>0</residueinterception>
               </SoilWater>
               <SoilNitrogen>
                 <Name>SoilNitrogen</Name>
@@ -36593,6 +36668,7 @@ namespace Models
               <State>Canterbury</State>
               <Latitude>999999</Latitude>
               <Longitude>999999</Longitude>
+              <Area>0</Area>
               <DataSource>Profile descriptions provided by Trevor Webb and data for functional horizions based on SWAMP project results</DataSource>
             </Soil>
             <Irrigation>
@@ -36654,11 +36730,13 @@ namespace Models
               <emissivity>0.96</emissivity>
               <gsmax>0.01</gsmax>
               <r50>200</r50>
+              <RadIntTotal>0</RadIntTotal>
             </MicroClimate>
             <Plant>
               <Name>Maize</Name>
               <ResourceName>Maize</ResourceName>
               <CropType>Maize</CropType>
+              <SowingDate>0001-01-01T00:00:00</SowingDate>
             </Plant>
             <Operations>
               <Name>Fert</Name>
@@ -36816,7 +36894,7 @@ namespace Models
                 <string>[Maize].Leaf.DeadCohortNo</string>
                 <string>[Maize].Leaf.InitialisedCohortNo</string>
                 <string>[Maize].Structure.MainStemFinalNodeNo</string>
-                <string>[Maize].Structure.MainStemNodeNo</string>
+                <string>[Maize].Structure.LeafTipsAppeared</string>
                 <string>[Maize].Structure.MainStemPrimordiaNo</string>
                 <string>[Maize].Leaf.CohortArea[1:30]</string>
                 <string>[Maize].Leaf.CohortSLA[1:30]</string>
@@ -38363,7 +38441,6 @@ namespace Models
             <Name>Soil</Name>
             <SoilWater>
               <Name>SoilWater</Name>
-              <residueinterception>0</residueinterception>
               <SummerDate>1-Nov</SummerDate>
               <SummerU>3</SummerU>
               <SummerCona>4.5</SummerCona>
@@ -38398,6 +38475,7 @@ namespace Models
                 <double>0.3</double>
                 <double>0.3</double>
               </SWCON>
+              <residueinterception>0</residueinterception>
             </SoilWater>
             <SoilNitrogen>
               <Name>SoilNitrogen</Name>
@@ -38699,12 +38777,14 @@ namespace Models
             <Country>Rwanda</Country>
             <Latitude>-2.15</Latitude>
             <Longitude>30.45</Longitude>
+            <Area>0</Area>
             <DataSource>Rwanda soil database using properties for Ferralsol</DataSource>
           </Soil>
           <Plant>
             <Name>Maize</Name>
             <ResourceName>Maize</ResourceName>
             <CropType>Maize</CropType>
+            <SowingDate>0001-01-01T00:00:00</SowingDate>
           </Plant>
           <MicroClimate>
             <Name>MicroClimate</Name>
@@ -38724,6 +38804,7 @@ namespace Models
             <emissivity>0.96</emissivity>
             <gsmax>0.01</gsmax>
             <r50>200</r50>
+            <RadIntTotal>0</RadIntTotal>
           </MicroClimate>
           <Manager>
             <Name>SowingFertiliser</Name>

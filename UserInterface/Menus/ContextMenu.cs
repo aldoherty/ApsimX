@@ -16,7 +16,7 @@ namespace UserInterface.Presenters
     using Models.Core;
     using Models.Factorial;
     using Models.Soils;
-
+    using APSIM.Shared.Utilities;
     /// <summary>
     /// This class contains methods for all context menu items that the ExplorerView exposes to the user.
     /// </summary>
@@ -133,9 +133,22 @@ namespace UserInterface.Presenters
         {
             if (this.explorerPresenter.Save())
             {
-                Model model = Apsim.Get(this.explorerPresenter.ApsimXFile, this.explorerPresenter.CurrentNodePath) as Model;
-                this.command = new Commands.RunCommand(this.explorerPresenter.ApsimXFile, model, this.explorerPresenter);
-                this.command.Do(null);
+                List<string> duplicates = this.explorerPresenter.ApsimXFile.FindDuplicateSimulationNames();
+                if (duplicates.Count > 0)
+                {
+                    string errorMessage = "Duplicate simulation names found " + StringUtilities.BuildString(duplicates.ToArray(), ", ");
+                    explorerPresenter.MainPresenter.ShowMessage(errorMessage, Models.DataStore.ErrorLevel.Error);
+                }
+                else
+                {
+                    Model model = Apsim.Get(this.explorerPresenter.ApsimXFile, this.explorerPresenter.CurrentNodePath) as Model;
+
+                    List<JobManager.IRunnable> jobs = new List<JobManager.IRunnable>();
+                    jobs.Add(Runner.ForSimulations(this.explorerPresenter.ApsimXFile, model, false));
+
+                    this.command = new Commands.RunCommand(jobs, model.Name, this.explorerPresenter);
+                    this.command.Do(null);
+                }
             }
         }
 
@@ -269,6 +282,7 @@ namespace UserInterface.Presenters
             DataStore dataStore = Apsim.Get(this.explorerPresenter.ApsimXFile, this.explorerPresenter.CurrentNodePath) as DataStore;
             if (dataStore != null)
             {
+                Cursor.Current = Cursors.WaitCursor;
                 List<DataTable> tables = new List<DataTable>();
                 foreach (string tableName in dataStore.TableNames)
                 {
@@ -279,10 +293,31 @@ namespace UserInterface.Presenters
                         tables.Add(table);
                     }
                 }
-                Cursor.Current = Cursors.WaitCursor; 
                 string fileName = Path.ChangeExtension(dataStore.Filename, ".xlsx");
                 Utility.Excel.WriteToEXCEL(tables.ToArray(), fileName);
+                explorerPresenter.MainPresenter.ShowMessage("Excel successfully created: " + fileName, DataStore.ErrorLevel.Information);
                 Cursor.Current = Cursors.Default; 
+            }
+        }
+
+
+        /// <summary>
+        /// Export the data store to text files
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        [ContextMenu(MenuName = "Export to text files",
+                     AppliesTo = new Type[] { typeof(DataStore) })]
+        public void ExportDataStoreToTextFiles(object sender, EventArgs e)
+        {
+            DataStore dataStore = Apsim.Get(this.explorerPresenter.ApsimXFile, this.explorerPresenter.CurrentNodePath) as DataStore;
+            if (dataStore != null)
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                dataStore.WriteToTextFiles();
+                string folder = Path.GetDirectoryName(explorerPresenter.ApsimXFile.FileName);
+                explorerPresenter.MainPresenter.ShowMessage("Text files have been written to " + folder, DataStore.ErrorLevel.Information);
+                Cursor.Current = Cursors.Default;
             }
         }
 
@@ -321,13 +356,48 @@ namespace UserInterface.Presenters
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event arguments</param>
-        [ContextMenu(MenuName = "Add...")]
+        [ContextMenu(MenuName = "Add model...")]
         public void AddModel(object sender, EventArgs e)
         {
             object model = Apsim.Get(explorerPresenter.ApsimXFile, explorerPresenter.CurrentNodePath);
             explorerPresenter.ShowInRightHandPanel(model,
                                                    "UserInterface.Views.ListButtonView",
                                                    "UserInterface.Presenters.AddModelPresenter");
+        }
+
+        /// <summary>
+        /// Event handler for a Add function action
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        [ContextMenu(MenuName = "Add function...")]
+        public void AddFunction(object sender, EventArgs e)
+        {
+            object model = Apsim.Get(explorerPresenter.ApsimXFile, explorerPresenter.CurrentNodePath);
+            explorerPresenter.ShowInRightHandPanel(model,
+                                                   "UserInterface.Views.ListButtonView",
+                                                   "UserInterface.Presenters.AddFunctionPresenter");
+        }
+
+        /// <summary>
+        /// Event handler for a write debug document
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event arguments</param>
+        [ContextMenu(MenuName = "Write debug document",
+                     AppliesTo = new Type[] { typeof(Simulation) })]
+        public void WriteDebugDocument(object sender, EventArgs e)
+        {
+            try
+            {
+                Simulation model = Apsim.Get(explorerPresenter.ApsimXFile, explorerPresenter.CurrentNodePath) as Simulation;
+                WriteDebugDoc writeDocument = new WriteDebugDoc(explorerPresenter, model);
+                writeDocument.Do(null);
+            }
+            catch (Exception err)
+            {
+                explorerPresenter.MainPresenter.ShowMessage(err.ToString(), Models.DataStore.ErrorLevel.Error);
+            }
         }
 
     }

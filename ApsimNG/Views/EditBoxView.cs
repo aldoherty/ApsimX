@@ -30,18 +30,30 @@ namespace UserInterface.Views
             textentry1 = new Entry();
             _mainWidget = textentry1;
             textentry1.FocusOutEvent += OnSelectionChanged;
+            _mainWidget.Destroyed += _mainWidget_Destroyed;
         }
+
+        private void _mainWidget_Destroyed(object sender, EventArgs e)
+        {
+            textentry1.FocusOutEvent -= OnSelectionChanged;
+        }
+
+        private string lastText = String.Empty;
 
         /// <summary>Gets or sets the Text.</summary>
         public string Value
         {
             get
             {
+                lastText = textentry1.Text;
                 return textentry1.Text;
             }
             set
             {
+                if (value == null)
+                    value = String.Empty;
                 textentry1.Text = value;
+                lastText = value;
             }
         }
 
@@ -57,8 +69,11 @@ namespace UserInterface.Views
         /// <param name="e"></param>
         private void OnSelectionChanged(object sender, FocusOutEventArgs e)
         {
-            if (Changed != null)
+            if (Changed != null && textentry1.Text != lastText)
+            {
+                lastText = textentry1.Text;
                 Changed.Invoke(this, e);
+            }
         }
 
     }

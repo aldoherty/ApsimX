@@ -59,13 +59,13 @@ namespace UserInterface.Presenters
         /// <summary>Detach the model from the view.</summary>
         public void Detach()
         {
+            explorerPresenter.CommandHistory.ModelChanged -= OnGraphModelChanged;
             if (currentPresenter != null)
                 currentPresenter.Detach();
             graphView.OnAxisClick -= OnAxisClick;
             graphView.OnLegendClick -= OnLegendClick;
             graphView.OnCaptionClick -= OnCaptionClick;
             graphView.OnHoverOverPoint -= OnHoverOverPoint;
-            explorerPresenter.CommandHistory.ModelChanged -= OnGraphModelChanged;
         }
 
         /// <summary>Draw the graph on the screen.</summary>
@@ -143,17 +143,39 @@ namespace UserInterface.Presenters
             double maximumX = graphView.AxisMaximum(Axis.AxisType.Bottom);
             double minimumY = graphView.AxisMinimum(Axis.AxisType.Left);
             double maximumY = graphView.AxisMaximum(Axis.AxisType.Left);
-            double majorStepY = graphView.AxisMajorStep(Axis.AxisType.Left);
             double lowestAxisScale = Math.Min(minimumX, minimumY);
             double largestAxisScale = Math.Max(maximumX, maximumY);
             
             for (int i = 0; i < annotations.Count; i++)
             {
-                int numLines = StringUtilities.CountSubStrings(annotations[i].text, "\r\n") + 1;
-                double interval = (largestAxisScale - lowestAxisScale) / 10; // fit 10 annotations on graph.
+                if (annotations[i] is TextAnnotation)
+                {
+                    TextAnnotation textAnnotation = annotations[i] as TextAnnotation;
+                    if (textAnnotation.x is double && ((double)textAnnotation.x) == double.MinValue)
+                    {
+                        int numLines = StringUtilities.CountSubStrings(textAnnotation.text, "\r\n") + 1;
+                        double interval = (largestAxisScale - lowestAxisScale) / 10; // fit 10 annotations on graph.
 
-                double yPosition = largestAxisScale - i * interval;
-                graphView.DrawText(annotations[i].text, minimumX, yPosition, Axis.AxisType.Bottom, Axis.AxisType.Left, annotations[i].colour);
+                        double yPosition = largestAxisScale - i * interval;
+                        graphView.DrawText(textAnnotation.text, minimumX, yPosition,
+                                           textAnnotation.leftAlign, textAnnotation.textRotation,
+                                           Axis.AxisType.Bottom, Axis.AxisType.Left, textAnnotation.colour);
+                    }
+                    else
+                    {
+                        graphView.DrawText(textAnnotation.text, textAnnotation.x, textAnnotation.y,
+                                           textAnnotation.leftAlign, textAnnotation.textRotation,
+                                           Axis.AxisType.Bottom, Axis.AxisType.Left, textAnnotation.colour);
+                    }
+                }
+                else
+                {
+                    LineAnnotation lineAnnotation = annotations[i] as LineAnnotation;
+
+                    graphView.DrawLine(lineAnnotation.x1, lineAnnotation.y1,
+                                       lineAnnotation.x2, lineAnnotation.y2,
+                                       lineAnnotation.type, lineAnnotation.thickness, lineAnnotation.colour);
+                }
             }
         }
 
@@ -238,10 +260,13 @@ namespace UserInterface.Presenters
         /// <param name="axisType">Type of the axis.</param>
         private void OnAxisClick(Axis.AxisType axisType)
         {
+            if (currentPresenter != null)
+                currentPresenter.Detach();
             AxisPresenter AxisPresenter = new AxisPresenter();
             currentPresenter = AxisPresenter;
             AxisView A = new AxisView(graphView as GraphView);
-            graphView.ShowEditorPanel(A.MainWidget, "Axis options");
+            string dimension = (axisType == Axis.AxisType.Left || axisType == Axis.AxisType.Right) ? "Y" : "X";
+            graphView.ShowEditorPanel(A.MainWidget, dimension + "-Axis options");
             AxisPresenter.Attach(GetAxis(axisType), A, explorerPresenter);
         }
 
@@ -250,6 +275,8 @@ namespace UserInterface.Presenters
         /// <param name="e">Event arguments</param>
         private void OnCaptionClick(object sender, EventArgs e)
         {
+            if (currentPresenter != null)
+                currentPresenter.Detach();
             TitlePresenter titlePresenter = new TitlePresenter();
             currentPresenter = titlePresenter;
             titlePresenter.ShowCaption = true;
@@ -283,7 +310,8 @@ namespace UserInterface.Presenters
         /// <param name="e">Event arguments</param>
         private void OnLegendClick(object sender, LegendClickArgs e)
         {
-            
+            if (currentPresenter != null)
+                currentPresenter.Detach();
             LegendPresenter presenter = new LegendPresenter(this);
             currentPresenter = presenter;
 

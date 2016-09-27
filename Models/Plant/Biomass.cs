@@ -4,6 +4,7 @@ using System.Text;
 using Models.Core;
 using System.Xml.Serialization;
 using APSIM.Shared.Utilities;
+using Models.PMF.Interfaces;
 
 namespace Models.PMF
 {
@@ -11,28 +12,16 @@ namespace Models.PMF
         <summary>
         The biomass of plant organs.
         </summary>
-        \retval Wt The total biomass weight (g m<sup>-2</sup>)
-        \retval NonStructuralWt The biomass weight of non-structural component (g m<sup>-2</sup>)
-        \retval StructuralWt The biomass weight of structural component (g m<sup>-2</sup>)
-        \retval MetabolicWt The biomass weight of metabolic component (g m<sup>-2</sup>)
-        \retval N The total nitrogen weight (g m<sup>-2</sup>)
-        \retval NonStructuralN The nitrogen weight of non-structural component (g m<sup>-2</sup>)
-        \retval StructuralN The nitrogen weight of structural component (g m<sup>-2</sup>)
-        \retval MetabolicN The nitrogen weight of metabolic component (g m<sup>-2</sup>)
-        \retval NConc The total nitrogen concentration (g g<sup>-1</sup>)
-        \retval NonStructuralNConc The nitrogen concentration of non-structural component (g g<sup>-1</sup>)
-        \retval StructuralNConc The nitrogen concentration of structural component (g g<sup>-1</sup>)
-        \retval MetabolicNConc The nitrogen concentration of metabolic component (g g<sup>-1</sup>)
-        <remarks>
-        The biomass of organ is split into three components, 
-        structural, non-structural and metabolic. 
-        </remarks>
+
     */
     /// <summary>
     /// Biomass of plant organs
     /// </summary>
     [Serializable]
+    [ValidParent(ParentType = typeof(IOrgan))]
     [XmlInclude(typeof(CompositeBiomass))]
+    [ValidParent(ParentType = typeof(Plant))]
+    [ValidParent(ParentType = typeof(IOrgan))]
     public class Biomass: Model
     {
         /// <summary>The _ structural wt</summary>
@@ -259,6 +248,28 @@ namespace Models.PMF
             _StructuralN += a._StructuralN;
             _NonStructuralN += a._NonStructuralN;
             _MetabolicN += a._MetabolicN;
+        }
+        /// <summary>Subtracts the specified a.</summary>
+        /// <param name="a">a.</param>
+        public void Subtract(Biomass a)
+        {
+            _StructuralWt -= a._StructuralWt;
+            _NonStructuralWt -= a._NonStructuralWt;
+            _MetabolicWt -= a._MetabolicWt;
+            _StructuralN -= a._StructuralN;
+            _NonStructuralN -= a._NonStructuralN;
+            _MetabolicN -= a._MetabolicN;
+        }
+        /// <summary>Multiplies a biomass object by a given scalar</summary>
+        /// <param name="scalar">a.</param>
+        public void Multiply(double scalar)
+        {
+            _StructuralWt *= scalar;
+            _NonStructuralWt *= scalar;
+            _MetabolicWt *= scalar;
+            _StructuralN *= scalar;
+            _NonStructuralN *= scalar;
+            _MetabolicN *= scalar;
         }
         /// <summary>Sets to.</summary>
         /// <param name="a">a.</param>

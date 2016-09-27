@@ -30,6 +30,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,6 +45,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>..\Bin\Models.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,10 +56,11 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>..\Bin\Models.xml</DocumentationFile>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\bin\</OutputPath>
+    <OutputPath>..\Bin\</OutputPath>
     <DefineConstants>TRACE;DEBUG;APSIMX</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>..\Bin\Models.xml</DocumentationFile>
@@ -65,6 +69,8 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\Bin\</OutputPath>
@@ -75,37 +81,39 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net20\Excel.dll</HintPath>
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="MathNet.Numerics, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.3.8.0\lib\net40\MathNet.Numerics.dll</HintPath>
+    <Reference Include="MathNet.Numerics, Version=3.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.13.0\lib\net40\MathNet.Numerics.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MigraDoc.DocumentObjectModel, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.DocumentObjectModel.dll</HintPath>
+    <Reference Include="MigraDoc.DocumentObjectModel-gdi, Version=1.50.3638.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.50.3638-beta\lib\net20\MigraDoc.DocumentObjectModel-gdi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="MigraDoc.Rendering, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.Rendering.dll</HintPath>
+    <Reference Include="MigraDoc.Rendering-gdi, Version=1.50.3638.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.50.3638-beta\lib\net20\MigraDoc.Rendering-gdi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="MigraDoc.RtfRendering, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.RtfRendering.dll</HintPath>
+    <Reference Include="MigraDoc.RtfRendering-gdi, Version=1.50.3638.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.50.3638-beta\lib\net20\MigraDoc.RtfRendering-gdi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\PdfSharp.dll</HintPath>
+    <Reference Include="PdfSharp-gdi, Version=1.50.3638.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.50.3638-beta\lib\net20\PdfSharp-gdi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+    <Reference Include="PdfSharp.Charting-gdi, Version=1.50.3638.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.50.3638-beta\lib\net20\PdfSharp.Charting-gdi.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -117,9 +125,9 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgPasture.cs" />
-    <Compile Include="AgPasture\AgPasture1.Sward.cs" />
-    <Compile Include="AgPasture\AgPasture1.PastureSpecies.cs" />
+    <Compile Include="AgPasture\AgPasture.PastureSpecies.cs" />
+    <Compile Include="AgPasture\AgPasture.PastureSpecies.Organs.cs" />
+    <Compile Include="AgPasture\AgPasture.Sward.cs" />
     <Compile Include="Agroforestry\AgroforestrySystem.cs" />
     <Compile Include="Agroforestry\LocalMicroClimate.cs" />
     <Compile Include="Agroforestry\TreeProxy.cs" />
@@ -129,33 +137,60 @@
     <Compile Include="Aqua\WaterPropertiesData.cs" />
     <Compile Include="Arbitrator\Arbitrator.cs" />
     <Compile Include="Arbitrator\ArbitratorGod.cs" />
+    <Compile Include="Core\APSIMFileConverter.cs" />
+    <Compile Include="Core\APSIMFileReader.cs" />
+    <Compile Include="Core\APSIMFileWriter.cs" />
     <Compile Include="Core\Attributes\DoNotDocumentAttribute.cs" />
     <Compile Include="Core\AutoDocumentation.cs" />
-    <Compile Include="Core\Converter.cs" />
     <Compile Include="Core\Alias.cs" />
+    <Compile Include="Core\Events.cs" />
+    <Compile Include="Core\FileFormat.cs" />
+    <Compile Include="Core\Links.cs" />
+    <Compile Include="Core\ModelNode.cs" />
+    <Compile Include="Core\ModelTypes.cs" />
+    <Compile Include="Core\Property.cs" />
     <Compile Include="Core\Runner.cs" />
+    <Compile Include="Core\Runners\RunDirectoryOfApsimFiles.cs" />
+    <Compile Include="Core\Runners\RunClonedSimulation.cs" />
+    <Compile Include="Core\Runners\RunAllCompletedEvent.cs" />
+    <Compile Include="Core\Runners\RunExternal.cs" />
+    <Compile Include="Core\Runners\RunOrganiser.cs" />
     <Compile Include="Graph\IGraphable.cs" />
     <Compile Include="Core\ITestable.cs" />
     <Compile Include="Core\Replacements.cs" />
+    <Compile Include="Graph\EventNamesOnGraph.cs" />
     <Compile Include="Graph\Regression.cs" />
     <Compile Include="Grazplan\Supplement.cs" />
     <Compile Include="Grazplan\GrazSupp.cs" />
+    <Compile Include="IClock.cs" />
+    <Compile Include="IIrrigation.cs" />
     <Compile Include="Interfaces\ILeaf.cs" />
     <Compile Include="Interfaces\ISurfaceOrganicMatter.cs" />
     <Compile Include="Interfaces\ICanopy.cs" />
+    <Compile Include="Interfaces\ISoilWater.cs" />
     <Compile Include="Interfaces\IWeather.cs" />
+    <Compile Include="Lifecycle\Cohort.cs" />
+    <Compile Include="Lifecycle\Lifecycle.cs" />
+    <Compile Include="Lifecycle\Lifestage.cs" />
+    <Compile Include="Lifecycle\LifestageProcess.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Plant\CultivarFolder.cs" />
+    <Compile Include="Plant\Functions\DemandFunctions\TEWaterDemandFunction.cs" />
     <Compile Include="Plant\Functions\MovingAverage.cs" />
     <Compile Include="Plant\Functions\HoldFunction.cs" />
     <Compile Include="Plant\Functions\DeltaFunction.cs" />
     <Compile Include="Plant\Functions\DemandFunctions\FillingRateFunction.cs" />
+    <Compile Include="Plant\Functions\SupplyFunctions\CanopyPhotosynthesis.cs" />
     <Compile Include="Plant\Interfaces\IArbitration.cs" />
     <Compile Include="Plant\Interfaces\IFunction.cs" />
     <Compile Include="Plant\Interfaces\IFunctionArray.cs" />
     <Compile Include="Interfaces\IUptake.cs" />
+    <Compile Include="Plant\Organs\PerennialLeaf.cs" />
+    <Compile Include="Plant\Phenology\ExpressionPhase.cs" />
     <Compile Include="Plant\Phenology\NodeNumberPhase.cs" />
     <Compile Include="Plant\Phenology\PhaseSetFunction.cs" />
+    <Compile Include="Plant\Phenology\QualitativePPEffect.cs" />
+    <Compile Include="Plant\Phenology\VernalisationC.cs" />
     <Compile Include="Plant\Phenology\ZadokPMF.cs" />
     <Compile Include="Plant\PlantTypes.cs" />
     <Compile Include="Plant\SimpleArbitrator.cs" />
@@ -209,8 +244,15 @@
     <Compile Include="Soils\Arbitrator\CropUptakes.cs" />
     <Compile Include="Soils\Arbitrator\Estimate.cs" />
     <Compile Include="Soils\Arbitrator\SoilState.cs" />
+    <Compile Include="Soils\HydraulicProperties.cs" />
     <Compile Include="Soils\ISoilCrop.cs" />
     <Compile Include="Soils\Arbitrator\ZoneWaterAndN.cs" />
+    <Compile Include="Soils\MultiPoreWater\Evapotranspiration.cs" />
+    <Compile Include="Soils\MultiPoreWater\SubHourlyData.cs" />
+    <Compile Include="Soils\MultiPoreWater\HourlyData.cs" />
+    <Compile Include="Soils\MultiPoreWater\ProfileParameters.cs" />
+    <Compile Include="Soils\MultiPoreWater\MultiPoreWater.cs" />
+    <Compile Include="Soils\MultiPoreWater\Pore.cs" />
     <Compile Include="Soils\SoilCropOilPalm.cs" />
     <Compile Include="Soils\PatchHandler.cs" />
     <Compile Include="Soils\Arbitrator\SoilArbitrator.cs" />
@@ -221,6 +263,24 @@
     <Compile Include="Soils\SoilWaterBackend\SoilWaterSoil.cs" />
     <Compile Include="Soils\SoilWaterBackend\SoilWaterSurface.cs" />
     <Compile Include="Soils\Variables.cs" />
+    <Compile Include="Stock\animgrp.cs" />
+    <Compile Include="Stock\animprm.cs" />
+    <Compile Include="Stock\grazenv.cs" />
+    <Compile Include="Stock\grazparam.cs" />
+    <Compile Include="Stock\grazprmread.cs" />
+    <Compile Include="Stock\graztype.cs" />
+    <Compile Include="Stock\sdmlpsr.cs" />
+    <Compile Include="Stock\stddate.cs" />
+    <Compile Include="Stock\stdmath.cs" />
+    <Compile Include="Stock\stdstrng.cs" />
+    <Compile Include="Stock\stock.cs" />
+    <Compile Include="Stock\stock_ent.cs" />
+    <Compile Include="Stock\stock_intf.cs" />
+    <Compile Include="Stock\stock_manage.cs" />
+    <Compile Include="Stock\stock_padd.cs" />
+    <Compile Include="Stock\stock_vars.cs" />
+    <Compile Include="Stock\typedval.cs" />
+    <Compile Include="Stock\xmlpsr.cs" />
     <Compile Include="Sugarcane\CropConstants.cs" />
     <Compile Include="Sugarcane\CultivarConstants.cs" />
     <Compile Include="Sugarcane\MathUtil.cs" />
@@ -276,7 +336,6 @@
     <Compile Include="Plant\Functions\StageBasedInterpolation.cs" />
     <Compile Include="Plant\Functions\StructureFunctions\HeightFunction.cs" />
     <Compile Include="Plant\Functions\StructureFunctions\InPhaseTemperatureFunction.cs" />
-    <Compile Include="Plant\Functions\StructureFunctions\MainStemFinalNodeNumberFunction.cs" />
     <Compile Include="Plant\Functions\SubtractFunction.cs" />
     <Compile Include="Plant\Functions\SupplyFunctions\RUECO2Function.cs" />
     <Compile Include="Plant\Functions\SupplyFunctions\RUEModel.cs" />
@@ -307,9 +366,6 @@
     <Compile Include="Plant\OldPlant\Stem1.cs" />
     <Compile Include="Plant\OldPlant\SWStress.cs" />
     <Compile Include="Plant\Organs\BaseOrgan.cs" />
-    <Compile Include="Plant\Organs\BelowGroundOrgan.cs" />
-    <Compile Include="Plant\Organs\GenericAboveGroundOrgan.cs" />
-    <Compile Include="Plant\Organs\GenericBelowGroundOrgan.cs" />
     <Compile Include="Plant\Organs\GenericOrgan.cs" />
     <Compile Include="Plant\Organs\HIReproductiveOrgan.cs" />
     <Compile Include="Plant\Organs\Leaf.cs" />
@@ -317,7 +373,6 @@
     <Compile Include="Plant\Organs\Nodule.cs" />
     <Compile Include="Plant\Interfaces\IOrgan.cs" />
     <Compile Include="Plant\Organs\ReproductiveOrgan.cs" />
-    <Compile Include="Plant\Organs\ReserveOrgan.cs" />
     <Compile Include="Plant\Organs\Root.cs" />
     <Compile Include="Plant\Organs\RootSWIM.cs" />
     <Compile Include="Plant\Organs\SimpleLeaf.cs" />
@@ -372,12 +427,41 @@
     <Compile Include="Core\ICrop.cs" />
     <Compile Include="Graph\Graph.cs" />
     <Compile Include="Utilities\Accumulator.cs" />
+    <Compile Include="WaterModel\CNReductionForCover.cs" />
+    <Compile Include="WaterModel\CNReductionForTillage.cs" />
+    <Compile Include="WaterModel\Conversions.cs" />
+    <Compile Include="WaterModel\EvaporationModel.cs" />
+    <Compile Include="WaterModel\ISoil.cs" />
+    <Compile Include="WaterModel\LateralFlow.cs" />
+    <Compile Include="WaterModel\Runoff.cs" />
+    <Compile Include="WaterModel\SaturatedFlow.cs" />
+    <Compile Include="WaterModel\Soil.cs" />
+    <Compile Include="WaterModel\UnsaturatedFlow.cs" />
+    <Compile Include="WaterModel\WaterTable.cs" />
     <Compile Include="Weather\ControlledEnvironment.cs" />
     <Compile Include="Weather\Weather.cs" />
     <Compile Include="Report\Report.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Simulation.cs" />
+    <Compile Include="WholeFarm\IResourceGroup.cs" />
+    <Compile Include="WholeFarm\Resources.cs" />
+    <Compile Include="WholeFarm\IResourceType.cs" />
+    <Compile Include="WholeFarm\RuminantTypeCohort.cs" />
+    <Compile Include="WholeFarm\RuminantType.cs" />
+    <Compile Include="WholeFarm\RuminantHerd.cs" />
+    <Compile Include="WholeFarm\PastureType.cs" />
+    <Compile Include="WholeFarm\Pasture.cs" />
+    <Compile Include="WholeFarm\FoodStoreType.cs" />
+    <Compile Include="WholeFarm\FoodStore.cs" />
+    <Compile Include="WholeFarm\Fodder.cs" />
+    <Compile Include="WholeFarm\FodderType.cs" />
+    <Compile Include="WholeFarm\LandType.cs" />
+    <Compile Include="WholeFarm\Land.cs" />
+    <Compile Include="WholeFarm\LabourFamily.cs" />
+    <Compile Include="WholeFarm\LabourFamilyType.cs" />
+    <Compile Include="WholeFarm\LabourHired.cs" />
+    <Compile Include="WholeFarm\LabourHiredType.cs" />
     <Compile Include="Zones\CircularZone.cs" />
     <Compile Include="Zones\RectangularZone.cs" />
   </ItemGroup>
@@ -416,6 +500,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\ruminant.prm" />
     <None Include="Resources\Wheat.xml">
       <SubType>Designer</SubType>
     </None>
@@ -440,13 +525,14 @@
     <Content Include="Resources\ResidueTypes.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Resources\SCUM.xml" />
+    <None Include="Resources\SCRUM.xml" />
     <None Include="Resources\Slurp.xml" />
     <None Include="Resources\Supplement.txt" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

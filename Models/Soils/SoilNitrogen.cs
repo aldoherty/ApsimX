@@ -738,6 +738,13 @@ namespace Models.Soils
 
         /// <summary>Gets the changes in mineral N made by other modules</summary>
         /// <param name="NitrogenChanges">The nitrogen changes.</param>
+        public void SetNitrogenChanged(NitrogenChangedType NitrogenChanges)
+        {
+            OnNitrogenChanged(NitrogenChanges);
+        }
+
+        /// <summary>Gets the changes in mineral N made by other modules</summary>
+        /// <param name="NitrogenChanges">The nitrogen changes.</param>
         [EventSubscribe("NitrogenChanged")]
         private void OnNitrogenChanged(NitrogenChangedType NitrogenChanges)
         {
@@ -799,8 +806,7 @@ namespace Models.Soils
 
         /// <summary>Get the information about urine being added</summary>
         /// <param name="UrineAdded">Urine deposition data (includes urea N amount, volume, area affected, etc)</param>
-        [EventSubscribe("AddUrine")]
-        private void OnAddUrine(AddUrineType UrineAdded)
+        public void AddUrine(AddUrineType UrineAdded)
         {
 
             // Starting with the minimalist version. To be updated by Val's group to include a urine patch algorithm
