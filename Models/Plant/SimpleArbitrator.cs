@@ -12,7 +12,7 @@ using APSIM.Shared.Utilities;
 
 namespace Models.PMF
 {
-    /// <summary>
+   /* /// <summary>
     /// 
     /// </summary>
     [Serializable]
@@ -330,6 +330,6 @@ namespace Models.PMF
 
         //Balance Retrans
 
-        //Set weights
-    }
+        //Set weights 
+    }*/
 }
