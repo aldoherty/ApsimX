@@ -197,7 +197,7 @@ namespace Models.PMF.Phen
         public void Clear()
         {
             DaysAfterSowing = 0;
-            Stage = 1;
+            Stage = 0;
             AccumulatedTT = 0;
             AccumulatedEmergedTT = 0;
             JustInitialised = true;
@@ -448,6 +448,13 @@ namespace Models.PMF.Phen
                 if (Plant != null)
                     if (Plant.IsAlive && PostPhenology != null)
                         PostPhenology.Invoke(this, new EventArgs());
+
+                if (OnDayOf(CurrentPhase.Start))
+                {
+                    Stage = (int)Stage;
+                    if (OnDayOf("Germination"))
+                        CurrentPhase.FractionComplete = 0;
+                }
 
                 Util.Debug("Phenology.CurrentPhaseName=%s", CurrentPhase.Name.ToLower());
                 Util.Debug("Phenology.CurrentStage=%f", Stage);
