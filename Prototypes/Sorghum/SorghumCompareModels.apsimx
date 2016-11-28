@@ -714,9 +714,6 @@ A function is used to provide maturity date as days after sowing(DAS).
           <Name>DMDemandFunction33</Name>
           <Value>0</Value>
         </Constant>
-        <GrowthRespiration>0</GrowthRespiration>
-        <MaintenanceRespiration>0</MaintenanceRespiration>
-        <RipeStage />
         <BiomassRemoval>
           <Name>BiomassRemovalDefaults</Name>
           <OrganBiomassRemovalType>
@@ -747,7 +744,10 @@ A function is used to provide maturity date as days after sowing(DAS).
             <FractionLiveToResidue>0.2</FractionLiveToResidue>
             <FractionDeadToResidue>0</FractionDeadToResidue>
           </OrganBiomassRemovalType>
-        </BiomassRemoval>        
+        </BiomassRemoval>
+        <GrowthRespiration>0</GrowthRespiration>
+        <MaintenanceRespiration>0</MaintenanceRespiration>
+        <RipeStage />
       </ReproductiveOrgan>
       <Root>
         <Name>Root</Name>
@@ -975,11 +975,6 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <Value>40</Value>
           <Units>m/g</Units>
         </Constant>
-        <GrowthRespiration>0</GrowthRespiration>
-        <MaintenanceRespiration>0</MaintenanceRespiration>
-        <ZoneNamesToGrowRootsIn />
-        <ZoneRootDepths />
-        <ZoneInitialDM />
         <BiomassRemoval>
           <Name>BiomassRemovalDefaults</Name>
           <OrganBiomassRemovalType>
@@ -1010,7 +1005,12 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
             <FractionLiveToResidue>0.2</FractionLiveToResidue>
             <FractionDeadToResidue>0</FractionDeadToResidue>
           </OrganBiomassRemovalType>
-        </BiomassRemoval>        
+        </BiomassRemoval>
+        <GrowthRespiration>0</GrowthRespiration>
+        <MaintenanceRespiration>0</MaintenanceRespiration>
+        <ZoneNamesToGrowRootsIn />
+        <ZoneRootDepths />
+        <ZoneInitialDM />
       </Root>
       <SimpleLeaf>
         <Name>Leaf</Name>
@@ -1611,29 +1611,11 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
             <Value>41</Value>
           </Constant>
         </LessThanFunction>
-        <GrowthRespiration>0</GrowthRespiration>
-        <MaintenanceRespiration>0</MaintenanceRespiration>
-        <CohortsInitialised>false</CohortsInitialised>
-        <TipsAtEmergence>0</TipsAtEmergence>
-        <CohortsAtInitialisation>0</CohortsAtInitialisation>
-        <InitialisedCohortNo>0</InitialisedCohortNo>
-        <AppearedCohortNo>0</AppearedCohortNo>
-        <PlantAppearedLeafNo>0</PlantAppearedLeafNo>
-        <Albedo>0</Albedo>
-        <Gsmax>0</Gsmax>
-        <R50>200</R50>
-        <LAI>0</LAI>
-        <Height>0</Height>
-        <FRGR>0</FRGR>
-        <PotentialEP>0</PotentialEP>
-        <KDead>0.03</KDead>
-        <LAIDead>0</LAIDead>
-        <WaterAllocation>0</WaterAllocation>
         <Constant>
           <Name>MaintenanceRespirationFunction</Name>
           <Value>0</Value>
           <Units>0-1</Units>
-        </Constant> 
+        </Constant>
         <Constant>
           <Name>DMConversionEfficiency</Name>
           <Value>1</Value>
@@ -1670,6 +1652,22 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
             <FractionDeadToResidue>0</FractionDeadToResidue>
           </OrganBiomassRemovalType>
         </BiomassRemoval>
+        <CohortsInitialised>false</CohortsInitialised>
+        <TipsAtEmergence>0</TipsAtEmergence>
+        <CohortsAtInitialisation>0</CohortsAtInitialisation>
+        <InitialisedCohortNo>0</InitialisedCohortNo>
+        <AppearedCohortNo>0</AppearedCohortNo>
+        <PlantAppearedLeafNo>0</PlantAppearedLeafNo>
+        <Albedo>0</Albedo>
+        <Gsmax>0</Gsmax>
+        <R50>200</R50>
+        <LAI>0</LAI>
+        <Height>0</Height>
+        <FRGR>0</FRGR>
+        <PotentialEP>0</PotentialEP>
+        <MicroClimatePresent>true</MicroClimatePresent>
+        <KDead>0.03</KDead>
+        <LAIDead>0</LAIDead>
       </SimpleLeaf>
       <GenericOrgan>
         <Name>Rachis</Name>
@@ -1791,12 +1789,11 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <Value>0</Value>
           <Units>g/m^2</Units>
         </Constant>
-        <GrowthRespiration>0</GrowthRespiration>
         <Constant>
           <Name>MaintenanceRespirationFunction</Name>
           <Value>0</Value>
           <Units>0-1</Units>
-        </Constant> 
+        </Constant>
         <Constant>
           <Name>DMConversionEfficiency</Name>
           <Value>1</Value>
@@ -1929,12 +1926,11 @@ Hammer et al (2009) used a constant extraction front velocity of 2.5cm per day i
           <Value>0</Value>
           <Units>/d</Units>
         </Constant>
-        <GrowthRespiration>0</GrowthRespiration>
         <Constant>
           <Name>MaintenanceRespirationFunction</Name>
           <Value>0</Value>
           <Units>0-1</Units>
-        </Constant> 
+        </Constant>
         <Constant>
           <Name>DMConversionEfficiency</Name>
           <Value>1</Value>
@@ -5011,7 +5007,6 @@ namespace Models
               <string>[Husk].Live.wt</string>
               <string>[Rachis].Live.wt</string>
               <string>[Grain].Live.wt</string>
-              <string />
               <string>[Grain].FinalGrainNum.Value</string>
               <string>[Leaf].LeafPartitioningCoefficient.Value</string>
               <string>[Leaf].DMDemandFunction.Value</string>
@@ -5020,6 +5015,7 @@ namespace Models
               <string>[Grain].DMDemandFunction.Value</string>
               <string>[Leaf].DMRemaining.Value</string>
               <string>[Grain].PotGrainFillRate.Value</string>
+              <string>([Leaf].TPLA.Value / 100) as TPLAAdj</string>
             </VariableNames>
             <EventNames>
               <string>[Clock].DoReport</string>
@@ -6081,6 +6077,69 @@ namespace Models
           <TableName>OldModel</TableName>
           <XFieldName>date</XFieldName>
           <YFieldName>LAI</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>false</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Axis>
+          <Type>Bottom</Type>
+          <Title />
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Right</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries />
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+      </Graph>
+      <Graph>
+        <Name>LeafNo11</Name>
+        <Series>
+          <Name>New</Name>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Right</YAxis>
+          <ColourArgb>-1663232</ColourArgb>
+          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>Report</TableName>
+          <XFieldName>date</XFieldName>
+          <YFieldName>TPLAAdj</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Old</Name>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Right</YAxis>
+          <ColourArgb>-2793984</ColourArgb>
+          <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Dash</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>OldModel</TableName>
+          <XFieldName>date</XFieldName>
+          <YFieldName>TPLA</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>false</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
