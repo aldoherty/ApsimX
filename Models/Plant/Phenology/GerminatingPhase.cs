@@ -74,7 +74,8 @@ namespace Models.PMF.Phen
             bool CanGerminate = true;
             if (Soil != null)
             {
-                CanGerminate = !Phenology.OnDayOf("Sowing") && Soil.Water[SowLayer] > Soil.LL15mm[SowLayer];
+                //CanGerminate = !Phenology.OnDayOf("Sowing") && Soil.Water[SowLayer] > Soil.LL15mm[SowLayer];
+                CanGerminate = !Phenology.OnDayOf("Sowing") && Soil.Water[SowLayer] > Soil.LL15mm[SowLayer] && Phenology.Stage >= (int)Phenology.Stage + FractionComplete;
             }
 
             if (DaysFromSowingToEndPhase > 0)
